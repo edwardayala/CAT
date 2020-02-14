@@ -16,7 +16,11 @@ SUBPROCESS NOTES:
 bar
 baz
 foo
-
+----------------
+Better use of subprocess:
+* Capture output of run(), save to variable, then run checks
+proccess1 = subprocess.run(['ls','-lsa'], capture_output=True, text=True)
+print(proccess1.stdout)
 
 Aircrack-ng Process:
 0. ROOT USER - MUST RUN SCRIPT AS ROOT
