@@ -46,9 +46,11 @@ def checkInterface():
     checkInterfaceProc = sp.run([ROOT,'iwconfig'], capture_output=True, text=True)    # Runs 'sudo iwconfig'
     if (checkInterfaceProc.stdout.find(interfaceMonitor) > 0):                    # if the interface is in Monitor mode, good, if not then toggle settings
         print('Interface is in Monitor mode - GOOD TO GO')
+        return True
     else:
         print('Interface is not in Monitor mode - Changing to Monitor Mode...')
         checkProcesses()
+        return False
         # monitorToggle(interfaceManaged, 0)
 
 def monitorToggle(interface, mode):     # Runs airmon-ng to start/stop Monitor mode
@@ -58,6 +60,14 @@ def monitorToggle(interface, mode):     # Runs airmon-ng to start/stop Monitor m
     else:
         sp.run([ROOT,'airmon-ng','stop',interface], capture_output=True)    # Toggle Managed Mode
         sp.run([ROOT,'NetworkManager'])     # Restart NetworkMananger to connect to Internet
+
+def findTarget():
+    if checkInterface == True:
+        regex = '\'(My.)\''
+        options = ['-R',regex,'-w','targets','--output-format','csv']
+        airmon_capture = sp.run([ROOT,options,interfaceMonitor], capture_output=True, text=True)
+        # airmon_capture = sp.run([ROOT,'airodump-ng',interfaceMonitor], capture_output=True, text=True)
+        print(airmon_capture.stdout)
 
 welcome()       # prints title 
 
