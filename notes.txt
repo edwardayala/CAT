@@ -34,11 +34,17 @@ Aircrack-ng Process:
 6. CAPTURE HANDSHAKE BETWEEN DEVICE AND TARGET NETWORK
 7. aircrack-ng -w WORDLIST FILENAME.cap
 
+Airodump-ng Notes:
+sudo airodump-ng -R '(TCC.)' -w test --output-format csv wlan0mon
+sudo airodump-ng -R '(MyCharterWiFi)' -w myOutput --output-format csv wlan0mon
+ROOT airodump-ng -R '[REGEX]' -w [OUTPUTFILE] --output-format [FILETYPE] [INTERFACE]
+
+WORKS:sudo airodump-ng -R '(My.)' -w targetstest --output-format csv wlan0mon
+
+
 Other:
 New Kali 2020.1 - not root as default
 		- users must run script as root
-
-
 
 TODO:
 * Outline process
