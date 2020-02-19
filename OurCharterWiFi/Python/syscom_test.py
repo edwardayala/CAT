@@ -87,7 +87,7 @@ if m.__contains__('Monitor'):
 elif m.__contains__('Managed'):
     mode = 'Managed'
 print(mode)
-print('Interface = ', interface[0], 'Mode = ', mode)
+print(Fore.BLUE,'Interface = ',Fore.YELLOW,interface[0],Fore.BLUE,'Mode = ',Fore.YELLOW,mode,Style.RESET_ALL)
 
 # # KILL INTERFERING PROCESSES
 # print('************KILLING TASKS************')
