@@ -28,7 +28,17 @@ def welcome():
     print(' ████▀   ▀▀█████▄▄▄▄█████████▄                                                 A WiFi Auditing Tool By Edward Ayala')
     print('  ▀▀         ▀▀██████▀▀   ▀▀██  ')                                                                                                                      
     print(Style.RESET_ALL)
-    
+
+
+def checkInterface():
+    checkInterfaceProc = sp.run([ROOT,'iwconfig'], capture_output=True, text=True)    # Runs 'sudo iwconfig'
+    if (checkInterfaceProc.stdout.find(interfaceMonitor) > 0):                    # if the interface is in Monitor mode, good, if not then toggle settings
+        print(Fore.GREEN,'Interface is in Monitor mode!',Fore.BLUE,'\nSearching for target networks...',Style.RESET_ALL)
+        findTarget()
+    else:
+        print(Fore.RED,'Interface is not in Monitor mode',Fore.YELLOW,'\nChanging to Monitor Mode...',Style.RESET_ALL)
+        checkProcesses()
+
 def checkProcesses():
     checkProcessesProc = sp.run([ROOT,'airmon-ng','check'], capture_output=True, text=True)
     if (checkProcessesProc.stdout.find('F')):
@@ -37,24 +47,14 @@ def checkProcesses():
         if usrInput == 'y' or usrInput == 'yes':
             print('Killing processes...')
             sp.run([ROOT,'airmon-ng','check','kill'], capture_output=True)
+            t.sleep(5)
+            monitorToggle(interfaceManaged,0)
         elif usrInput == 'n' or usrInput == 'no':
             print('Attempting to toggle Monitor mode, this may not work without killing the interfering processes.')
     else:
         print('No interfering processes - GOOD TO GO')
 
-def checkInterface():
-    checkInterfaceProc = sp.run([ROOT,'iwconfig'], capture_output=True, text=True)    # Runs 'sudo iwconfig'
-    if (checkInterfaceProc.stdout.find(interfaceMonitor) > 0):                    # if the interface is in Monitor mode, good, if not then toggle settings
-        print('Interface is in Monitor mode - GOOD TO GO')
-        return True
-    else:
-        print('Interface is not in Monitor mode - Changing to Monitor Mode...')
-        checkProcesses()
-        return False
-        # monitorToggle(interfaceManaged, 0)
-
 def monitorToggle(interface, mode):     # Runs airmon-ng to start/stop Monitor mode
-    # checkProcesses()
     if mode == 0:
         sp.run([ROOT,'airmon-ng','start',interface], capture_output=True)   # Toggle Monitor Mode
     else:
@@ -62,12 +62,12 @@ def monitorToggle(interface, mode):     # Runs airmon-ng to start/stop Monitor m
         sp.run([ROOT,'NetworkManager'])     # Restart NetworkMananger to connect to Internet
 
 def findTarget():
-    if checkInterface == True:
-        regex = '\'(My.)\''
-        options = ['-R',regex,'-w','targets','--output-format','csv']
-        airmon_capture = sp.run([ROOT,options,interfaceMonitor], capture_output=True, text=True)
-        # airmon_capture = sp.run([ROOT,'airodump-ng',interfaceMonitor], capture_output=True, text=True)
-        print(airmon_capture.stdout)
+    # airodump_proc = sp.Popen([ROOT,'timeout','12','airodump-ng','-R','\'(TCC.)\'','-w','targets','--output-format','csv',interfaceMonitor], stdout=sp.PIPE)
+    airodump_proc = sp.Popen([ROOT,'airodump-ng','-R','\'(My.)\'','-w','targets','--output-format','csv',interfaceMonitor,'&'], stdout=sp.PIPE)
+    airodump_capture = airodump_proc.stdout.read().decode('utf-8')
+    print(airodump_capture)
+    t.sleep(12)
+    airodump_proc.send_signal(signal.SIGINT)
 
 welcome()       # prints title 
 
