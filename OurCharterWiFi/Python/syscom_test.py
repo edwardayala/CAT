@@ -43,6 +43,7 @@ def getInterface(choice):
     else:
         print(Fore.BLUE,'Interface:',Fore.YELLOW,interface,Fore.BLUE,'Mode:',Fore.YELLOW,mode,Style.RESET_ALL)
         checkInterface()
+    # TODO: Add feature for monitor mode
 
 
 # More variables
