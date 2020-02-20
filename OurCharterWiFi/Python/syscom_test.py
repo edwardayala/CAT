@@ -7,8 +7,6 @@ from colorama import Fore,Style
 
 # Variables
 ROOT = 'sudo'
-interfaceMonitor = 'wlan0mon' # Interface name in Monitor Mode
-interfaceManaged = 'wlan0'    # Interface name in Managed Mode
 
 # Functions
 def welcome():
@@ -28,11 +26,31 @@ def welcome():
     print(' ████▀   ▀▀█████▄▄▄▄█████████▄                                                 A WiFi Auditing Tool By Edward Ayala')
     print('  ▀▀         ▀▀██████▀▀   ▀▀██  ')                                                                                                                      
     print(Style.RESET_ALL)
+    
+def getInterface(choice):
+    command = ['sudo','iwconfig']
+    process = sp.run(command, capture_output=True, text=True)
+    output = process.stdout.split(' ')
+    for x in output:
+        if x == '':
+            output.remove(x)
+    interface = output[0]
+    mode = output[5].split(':')[1]
+    if choice == 0:
+        return interface
+    elif choice == 1:
+        return mode
+    else:
+        print(Fore.BLUE,'Interface:',Fore.YELLOW,interface,Fore.BLUE,'Mode:',Fore.YELLOW,mode,Style.RESET_ALL)
+        checkInterface()
 
+
+# More variables
+interface = getInterface(0)
+mode = getInterface(1)
 
 def checkInterface():
-    checkInterfaceProc = sp.run([ROOT,'iwconfig'], capture_output=True, text=True)    # Runs 'sudo iwconfig'
-    if (checkInterfaceProc.stdout.find(interfaceMonitor) > 0):                    # if the interface is in Monitor mode, good, if not then toggle settings
+    if interface == 'Monitor':        
         print(Fore.GREEN,'Interface is in Monitor mode!',Fore.BLUE,'\nSearching for target networks...',Style.RESET_ALL)
         findTarget()
     else:
@@ -48,11 +66,10 @@ def checkProcesses():
             print('Killing processes...')
             sp.run([ROOT,'airmon-ng','check','kill'], capture_output=True)
             t.sleep(5)
-            monitorToggle(interfaceManaged,0)
+            monitorToggle(interface,0)
         elif usrInput == 'n' or usrInput == 'no':
             print('Attempting to toggle Monitor mode, this may not work without killing the interfering processes.')
-            monitorToggle(interfaceManaged,0)
-
+            monitorToggle(interface,0)
     else:
         print('No interfering processes - GOOD TO GO')
 
@@ -67,21 +84,12 @@ def monitorToggle(interface, mode):     # Runs airmon-ng to start/stop Monitor m
 
 def findTarget():
     # airodump_proc = sp.Popen([ROOT,'timeout','12','airodump-ng','-R','\'(TCC.)\'','-w','targets','--output-format','csv',interfaceMonitor], stdout=sp.PIPE)
-    airodump_proc = sp.Popen([ROOT,'airodump-ng','-R','\'(My.)\'','-w','targets','--output-format','csv',interfaceMonitor,'&'], stdout=sp.PIPE)
+    airodump_proc = sp.Popen([ROOT,'airodump-ng','-R','\'(My.)\'','-w','targets','--output-format','csv',interface,'&'], stdout=sp.PIPE)
     airodump_capture = airodump_proc.stdout.read().decode('utf-8')
     print(airodump_capture)
     t.sleep(12)
     airodump_proc.send_signal(signal.SIGINT)
 
 welcome()       # prints title
-command = ['sudo','iwconfig']
+getInterface(None)  # prints interface information
 
-process = sp.run(command, capture_output=True, text=True)
-output = process.stdout
-split1 = output.split(' ')
-for x in split1:
-    if x == '':
-        split1.remove(x)
-interface = split1[0]
-mode = split1[5].split(':')[1]
-print(Fore.BLUE,'Interface:',Fore.YELLOW,interface,Fore.BLUE,'Mode:',Fore.YELLOW,mode,Style.RESET_ALL)
