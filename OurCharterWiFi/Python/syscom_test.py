@@ -51,15 +51,19 @@ def checkProcesses():
             monitorToggle(interfaceManaged,0)
         elif usrInput == 'n' or usrInput == 'no':
             print('Attempting to toggle Monitor mode, this may not work without killing the interfering processes.')
+            monitorToggle(interfaceManaged,0)
+
     else:
         print('No interfering processes - GOOD TO GO')
 
 def monitorToggle(interface, mode):     # Runs airmon-ng to start/stop Monitor mode
     if mode == 0:
         sp.run([ROOT,'airmon-ng','start',interface], capture_output=True)   # Toggle Monitor Mode
+        print(Fore.GREEN,'Monitor Mode Enabled!',Style.RESET_ALL)
     else:
         sp.run([ROOT,'airmon-ng','stop',interface], capture_output=True)    # Toggle Managed Mode
         sp.run([ROOT,'NetworkManager'])     # Restart NetworkMananger to connect to Internet
+        print(Fore.GREEN,'Monitor Mode Disabled & Internet Capabilities Re-Enabled',Style.RESET_ALL)
 
 def findTarget():
     # airodump_proc = sp.Popen([ROOT,'timeout','12','airodump-ng','-R','\'(TCC.)\'','-w','targets','--output-format','csv',interfaceMonitor], stdout=sp.PIPE)
@@ -69,9 +73,21 @@ def findTarget():
     t.sleep(12)
     airodump_proc.send_signal(signal.SIGINT)
 
-welcome()       # prints title 
-
-
+welcome()       # prints title
+command = ['sudo','timeout','2','iwconfig']
+arr = []
+with sp.Popen(command, stdout=sp.PIPE, universal_newlines=True) as process:
+    for line in process.stdout:
+        arr.append(line)
+interface = arr[0].split(" ")
+m = arr[1]
+# print(interface)
+if m.__contains__('Monitor'):
+    mode = 'Monitor'
+elif m.__contains__('Managed'):
+    mode = 'Managed'
+print(mode)
+print('Interface = ', interface[0], 'Mode = ', mode)
 
 # # KILL INTERFERING PROCESSES
 # print('************KILLING TASKS************')
