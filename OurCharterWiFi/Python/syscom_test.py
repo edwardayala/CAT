@@ -74,36 +74,14 @@ def findTarget():
     airodump_proc.send_signal(signal.SIGINT)
 
 welcome()       # prints title
-command = ['sudo','timeout','2','iwconfig']
-arr = []
-with sp.Popen(command, stdout=sp.PIPE, universal_newlines=True) as process:
-    for line in process.stdout:
-        arr.append(line)
-interface = arr[0].split(" ")
-m = arr[1]
-# print(interface)
-if m.__contains__('Monitor'):
-    mode = 'Monitor'
-elif m.__contains__('Managed'):
-    mode = 'Managed'
-print(mode)
-print(Fore.BLUE,'Interface = ',Fore.YELLOW,interface[0],Fore.BLUE,'Mode = ',Fore.YELLOW,mode,Style.RESET_ALL)
+command = ['sudo','iwconfig']
 
-# # KILL INTERFERING PROCESSES
-# print('************KILLING TASKS************')
-# sp.run(['airmon-ng', 'check', 'kill'])
-# print('************TASKS KILLED************')
-# t.sleep(3)
-
-# # SET WIRELESS CARD TO MONITOR MODE
-# print('************ENTERING MONITOR MODE************')
-# sp.run(['airmon-ng', 'start', 'wlan0'])
-# t.sleep(3)
-
-# print('************CHECKING WIRELESS CARD STATUS************')
-# sp.run('iwconfig')
-# t.sleep(1)
-# sp.run('NetworkManager')
-# # SCAN FOR NEARBY NETWORKS
-# sp.run(['airodump-ng', 'wlan0mon'])
-# t.sleep(10)
+process = sp.run(command, capture_output=True, text=True)
+output = process.stdout
+split1 = output.split(' ')
+for x in split1:
+    if x == '':
+        split1.remove(x)
+interface = split1[0]
+mode = split1[5].split(':')[1]
+print(Fore.BLUE,'Interface:',Fore.YELLOW,interface,Fore.BLUE,'Mode:',Fore.YELLOW,mode,Style.RESET_ALL)
