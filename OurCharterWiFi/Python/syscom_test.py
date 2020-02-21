@@ -28,14 +28,13 @@ def welcome():
     print(Style.RESET_ALL)
     
 def getInterface(choice):
-    command = ['sudo','iwconfig']
-    process = sp.run(command, capture_output=True, text=True)
+    commands = ['sudo','iwconfig']
+    process = process = sp.run(commands, capture_output=True, text=True)
     output = process.stdout.split(' ')
-    for x in output:
-        if x == '':
-            output.remove(x)
     interface = output[0]
-    mode = output[5].split(':')[1]
+    for x in output:
+        if x.__contains__('Mode:'):
+            mode = x.split(':')[1]
     if choice == 0:
         return interface
     elif choice == 1:
@@ -43,7 +42,6 @@ def getInterface(choice):
     else:
         print(Fore.BLUE,'Interface:',Fore.YELLOW,interface,Fore.BLUE,'Mode:',Fore.YELLOW,mode,Style.RESET_ALL)
         checkInterface()
-    # TODO: Add feature for monitor mode
 
 
 # More variables
@@ -51,11 +49,11 @@ interface = getInterface(0)
 mode = getInterface(1)
 
 def checkInterface():
-    if interface == 'Monitor':        
-        print(Fore.GREEN,'Interface is in Monitor mode!',Fore.BLUE,'\nSearching for target networks...',Style.RESET_ALL)
+    if mode == 'Monitor':        
+        print(Fore.GREEN,'Interface is in Monitor mode!',Fore.BLUE,'\n Searching for target networks...',Style.RESET_ALL)
         findTarget()
     else:
-        print(Fore.RED,'Interface is not in Monitor mode',Fore.YELLOW,'\nChanging to Monitor Mode...',Style.RESET_ALL)
+        print(Fore.RED,'Interface is not in Monitor mode',Fore.YELLOW,'\n Changing to Monitor Mode...',Style.RESET_ALL)
         checkProcesses()
 
 def checkProcesses():
@@ -92,5 +90,17 @@ def findTarget():
     airodump_proc.send_signal(signal.SIGINT)
 
 welcome()       # prints title
-getInterface(None)  # prints interface information
+# getInterface(None)  # prints interface information
 
+command = [ROOT,'airodump-ng','-K','1','-I','10','-R',"'(My.)'",'-w','targets','--output-format','csv',interface,]
+# process = sp.run(command, capture_output=True, text=True)
+# output = process.stdout
+# t.sleep(1)
+# proc = sp.run('ps aux | grep airodump', capture_output=True, text=True, shell=True)
+# procs = proc.stdout
+# print(procs)
+
+process = sp.Popen(command, stdout=sp.PIPE, text=True)
+output = process.stdout.read()
+t.sleep(11)
+process.send_signal(signal.SIGINT)
