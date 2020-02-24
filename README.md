@@ -1,6 +1,8 @@
 # OurSpectrumWiFi
 ##### A WiFi Auditing Tool By Edward Ayala
-    
+<span style="color:red;">
+
+
 ```ascii
 
           ▀▀▀██████▄▄▄
@@ -19,6 +21,8 @@
   ▀▀         ▀▀██████▀▀   ▀▀██
 
 ```
+
+</span>
 
 ### Description:
 Implementing the Aircrack-ng Suite and Python3, this tool automates the WiFi auditing process.
