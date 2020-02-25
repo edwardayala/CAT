@@ -101,6 +101,6 @@ command = [ROOT,'airodump-ng','-K','1','-I','10','-R',"'(My.)'",'-w','targets','
 # print(procs)
 
 process = sp.Popen(command, stdout=sp.PIPE, text=True)
-output = process.stdout.read()
-t.sleep(11)
+# output = process.stdout.read()
+t.sleep(2)
 process.send_signal(signal.SIGINT)
