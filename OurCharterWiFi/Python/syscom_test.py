@@ -28,6 +28,7 @@ def welcome():
     print(Style.RESET_ALL)
     
 def getInterface(choice):
+    # Check if there is no wifi interface available
     commands = ['sudo','iwconfig']
     process = process = sp.run(commands, capture_output=True, text=True)
     output = process.stdout.split(' ')
