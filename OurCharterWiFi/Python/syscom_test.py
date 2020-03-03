@@ -13,7 +13,7 @@ ROOT = 'sudo'
 
 # Functions
 def welcome():
-    print(Fore.RED)
+    print(Fore.LIGHTCYAN_EX)
     # print('          ▀▀▀██████▄▄▄          ')
     # print('                 ▀▀▀████▄       ')
     # print('          ▄███████▀   ▀███▄     ')
@@ -55,7 +55,7 @@ def welcome():
     print('               ( O   O   )           ;   ██║            ██╔══██║          ██║   ')
     print("                `.=o=__,'            \\   ╚██████╗██╗    ██║  ██║██╗       ██║██╗")
     print('                  /         _,--.__   \\    ╚═════╝╚═╝    ╚═╝  ╚═╝╚═╝       ╚═╝╚═╝')
-    print("                 /  _ )   ,'   `-. `-. \\")
+    print("                 /  _ )   ,'   `-. `-. \\     Charter(networks) Auditing Tool by Edward Ayala")
     print("                / ,' /  ,\'        \ \ \ \ ")
     print("               / /  / ,'          (,_)(,_)")
     print('              (,;  (,,)')
