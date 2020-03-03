@@ -1,5 +1,4 @@
 # WiFi Hacking: The Dangers of Default Passwords by Edward Ayala
-# Last edit: 03/03/2020 | 1:30AM
 
 import subprocess as sp
 import time as t
@@ -14,7 +13,7 @@ ROOT = 'sudo'
 
 # Functions
 def welcome():
-    # print(Fore.RED)
+    print(Fore.RED)
     # print('          ▀▀▀██████▄▄▄          ')
     # print('                 ▀▀▀████▄       ')
     # print('          ▄███████▀   ▀███▄     ')
@@ -45,21 +44,28 @@ def welcome():
     #                  / /  / ,'          (,_)(,_)
     #                 (,;  (,,)
 
-    print('    ,----.')
-    print('   ( WOW! )                         .-.')
-    print('    `----\' _                         \ \\')
-    print('          (_)                         \ \\')
-    print('              O                       | |')
-    print('                o                     | |')
-    print('                  . /\---/\   _,---._ | |')
-    print('                   /^   ^  \,'       `. ;')
-    print('                  ( O   O   )           ;')
-    print('                   `.=o=__,'            \')
-    print('                     /         _,--.__   \')
-    print('                    /  _ )   ,'   `-. `-. \')
-    print('                   / ,' /  ,'        \ \ \ \')
-    print('                  / /  / ,'          (,_)(,_)')
-    print('                 (,;  (,,)')
+    print(' ,--------------------------.')
+    print('( Change Your WiFi Password! )   .-.')
+    print(' `--------------------------\'     \ \\')
+    print('       (_)                         \ \\')
+    print('           O                       | |')
+    print('             o                     | |    ██████╗        █████╗        ████████╗')
+    print('               . /\---/\   _,---._ | |   ██╔════╝       ██╔══██╗       ╚══██╔══╝')
+    print("                /^   ^  \,'       \'. ;   ██║            ███████║          ██║   ")
+    print('               ( O   O   )           ;   ██║            ██╔══██║          ██║   ')
+    print("                `.=o=__,'            \\   ╚██████╗██╗    ██║  ██║██╗       ██║██╗")
+    print('                  /         _,--.__   \\    ╚═════╝╚═╝    ╚═╝  ╚═╝╚═╝       ╚═╝╚═╝')
+    print("                 /  _ )   ,'   `-. `-. \\")
+    print("                / ,' /  ,\'        \ \ \ \ ")
+    print("               / /  / ,'          (,_)(,_)")
+    print('              (,;  (,,)')
+
+    # print(' ██████╗        █████╗        ████████╗')
+    # print('██╔════╝       ██╔══██╗       ╚══██╔══╝')
+    # print('██║            ███████║          ██║   ')
+    # print('██║            ██╔══██║          ██║   ')
+    # print('╚██████╗██╗    ██║  ██║██╗       ██║██╗')
+    # print(' ╚═════╝╚═╝    ╚═╝  ╚═╝╚═╝       ╚═╝╚═╝')
     
                                                                                                  
     print(Style.RESET_ALL)

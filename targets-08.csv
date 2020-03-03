@@ -1,0 +1,14 @@
+
+BSSID, First time seen, Last time seen, channel, Speed, Privacy, Cipher, Authentication, Power, # beacons, # IV, LAN IP, ID-length, ESSID, Key
+
+Station MAC, First time seen, Last time seen, Power, # packets, BSSID, Probed ESSIDs
+98:2C:BC:1A:C0:BB, 2020-03-03 15:45:09, 2020-03-03 15:45:09, -90,        1, (not associated) ,
+8E:7F:6B:98:14:4F, 2020-03-03 15:45:10, 2020-03-03 15:45:10, -90,        1, (not associated) ,
+66:1D:55:36:AA:00, 2020-03-03 15:45:17, 2020-03-03 15:45:17, -89,        1, (not associated) ,
+B8:27:EB:C0:97:89, 2020-03-03 15:45:17, 2020-03-03 15:45:17, -87,        1, (not associated) ,
+8C:85:90:0C:62:55, 2020-03-03 15:45:12, 2020-03-03 15:45:12, -82,        6, (not associated) ,TXWES-Secure
+12:36:51:23:15:A4, 2020-03-03 15:45:13, 2020-03-03 15:45:13, -79,        3, (not associated) ,
+30:57:14:23:7A:F8, 2020-03-03 15:45:14, 2020-03-03 15:45:19, -66,       10, B0:B8:67:5E:AC:E1,TXWES-Secure
+C8:B5:B7:71:DE:02, 2020-03-03 15:45:10, 2020-03-03 15:45:10, -61,        7, (not associated) ,TXWES-Secure
+FC:77:74:41:78:D2, 2020-03-03 15:45:21, 2020-03-03 15:45:21, -80,        1, (not associated) ,
+
