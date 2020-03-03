@@ -1,3 +1,6 @@
+# WiFi Hacking: The Dangers of Default Passwords by Edward Ayala
+# Last edit: 03/03/2020 | 1:30AM
+
 import subprocess as sp
 import time as t
 import signal
