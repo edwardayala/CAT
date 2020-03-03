@@ -1,0 +1,8 @@
+
+BSSID, First time seen, Last time seen, channel, Speed, Privacy, Cipher, Authentication, Power, # beacons, # IV, LAN IP, ID-length, ESSID, Key
+
+Station MAC, First time seen, Last time seen, Power, # packets, BSSID, Probed ESSIDs
+80:7D:3A:53:BE:70, 2020-03-03 01:17:17, 2020-03-03 01:17:17, -42,        1, (not associated) ,MySpectrumWiFia3-2G
+C8:3A:6B:3A:18:E5, 2020-03-03 01:17:17, 2020-03-03 01:17:17, -57,        5, (not associated) ,MySpectrumWiFia3-2G
+80:7D:3A:53:C5:07, 2020-03-03 01:17:18, 2020-03-03 01:17:18, -47,        1, (not associated) ,MySpectrumWiFia3-2G
+

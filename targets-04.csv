@@ -1,0 +1,14 @@
+
+BSSID, First time seen, Last time seen, channel, Speed, Privacy, Cipher, Authentication, Power, # beacons, # IV, LAN IP, ID-length, ESSID, Key
+
+Station MAC, First time seen, Last time seen, Power, # packets, BSSID, Probed ESSIDs
+AC:63:BE:FB:E2:BA, 2020-03-03 01:12:42, 2020-03-03 01:12:47, -82,        2, A0:04:60:05:41:27,
+94:27:90:F8:40:CA, 2020-03-03 01:12:34, 2020-03-03 01:12:43, -82,       30, AC:3B:77:4A:76:44,
+60:45:BD:36:15:CC, 2020-03-03 01:12:34, 2020-03-03 01:12:43, -79,      173, AC:3B:77:4A:76:44,
+44:D8:78:35:CB:B5, 2020-03-03 01:12:36, 2020-03-03 01:12:36, -60,        1, 60:FE:20:55:92:46,
+C8:3A:6B:3A:18:E5, 2020-03-03 01:12:35, 2020-03-03 01:12:45, -57,       14, (not associated) ,MySpectrumWiFia3-2G
+80:7D:3A:53:C5:07, 2020-03-03 01:12:34, 2020-03-03 01:12:47, -44,       13, (not associated) ,MySpectrumWiFia3-2G
+E8:FB:E9:3D:9C:25, 2020-03-03 01:12:36, 2020-03-03 01:12:41, -46,       60, 60:FE:20:55:92:46,
+80:7D:3A:53:BE:70, 2020-03-03 01:12:35, 2020-03-03 01:12:45, -45,       10, (not associated) ,MySpectrumWiFia3-2G
+B0:C1:9E:A1:DD:99, 2020-03-03 01:12:46, 2020-03-03 01:12:46, -60,        3, 60:FE:20:55:92:46,
+
