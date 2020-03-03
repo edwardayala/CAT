@@ -4,6 +4,7 @@ import signal
 import sys
 from os import system
 from colorama import Fore,Style
+import csv
 
 # Variables
 ROOT = 'sudo'
@@ -28,9 +29,8 @@ def welcome():
     print(Style.RESET_ALL)
     
 def getInterface(choice):
-    # Check if there is no wifi interface available
-    commands = ['sudo','iwconfig']
-    process = process = sp.run(commands, capture_output=True, text=True)
+    commands = ['iwconfig']
+    process = sp.run(commands, capture_output=True, text=True)
     output = process.stdout.split(' ')
     interface = output[0]
     for x in output:
@@ -41,30 +41,30 @@ def getInterface(choice):
     elif choice == 1:
         return mode
     else:
-        print(Fore.BLUE,'Interface:',Fore.YELLOW,interface,Fore.BLUE,'Mode:',Fore.YELLOW,mode,Style.RESET_ALL)
+        print(Fore.BLUE,'Interface:',Fore.LIGHTYELLOW_EX,interface,Fore.BLUE,'Mode:',Fore.LIGHTYELLOW_EX,mode,Style.RESET_ALL)
         checkInterface()
-
 
 # More variables
 interface = getInterface(0)
 mode = getInterface(1)
 
 def checkInterface():
-    if mode == 'Monitor':        
+    if getInterface(1) == 'Monitor':        
         print(Fore.GREEN,'Interface is in Monitor mode!',Fore.BLUE,'\n Searching for target networks...',Style.RESET_ALL)
         findTarget()
-    else:
+    elif getInterface(1) == 'Managed':
         print(Fore.RED,'Interface is not in Monitor mode',Fore.YELLOW,'\n Changing to Monitor Mode...',Style.RESET_ALL)
         checkProcesses()
+        # LOOP HERE ^^^ BAD - kinda fixed but still needs work...
 
 def checkProcesses():
-    checkProcessesProc = sp.run([ROOT,'airmon-ng','check'], capture_output=True, text=True)
+    checkProcessesProc = sp.run(['airmon-ng','check'], capture_output=True, text=True)
     if (checkProcessesProc.stdout.find('F')):
-        print(Fore.RED,'Found interfering processes',Fore.BLUE,'\n\n Killing processes will disconnect you from the Internet, would you like to continue? (y/n)',Style.RESET_ALL)
-        usrInput = input()
+        print(Fore.RED,'Found interfering processes',Fore.BLUE)
+        usrInput = input('Killing processes will disconnect you from the Internet, would you like to continue? (y/n) ')
         if usrInput == 'y' or usrInput == 'yes':
             print('Killing processes...')
-            sp.run([ROOT,'airmon-ng','check','kill'], capture_output=True)
+            sp.run(['airmon-ng','check','kill'], capture_output=True)
             t.sleep(5)
             monitorToggle(interface,0)
         elif usrInput == 'n' or usrInput == 'no':
@@ -75,33 +75,84 @@ def checkProcesses():
 
 def monitorToggle(interface, mode):     # Runs airmon-ng to start/stop Monitor mode
     if mode == 0:
-        sp.run([ROOT,'airmon-ng','start',interface], capture_output=True)   # Toggle Monitor Mode
+        sp.run(['airmon-ng','start',interface], capture_output=True)   # Toggle Monitor Mode
         print(Fore.GREEN,'Monitor Mode Enabled!',Style.RESET_ALL)
+        checkInterface()
     else:
-        sp.run([ROOT,'airmon-ng','stop',interface], capture_output=True)    # Toggle Managed Mode
-        sp.run([ROOT,'NetworkManager'])     # Restart NetworkMananger to connect to Internet
+        sp.run(['airmon-ng','stop',interface], capture_output=True)    # Toggle Managed Mode
+        sp.run(['NetworkManager'])     # Restart NetworkMananger to connect to Internet
         print(Fore.GREEN,'Monitor Mode Disabled & Internet Capabilities Re-Enabled',Style.RESET_ALL)
 
 def findTarget():
-    # airodump_proc = sp.Popen([ROOT,'timeout','12','airodump-ng','-R','\'(TCC.)\'','-w','targets','--output-format','csv',interfaceMonitor], stdout=sp.PIPE)
-    airodump_proc = sp.Popen([ROOT,'airodump-ng','-R','\'(My.)\'','-w','targets','--output-format','csv',interface,'&'], stdout=sp.PIPE)
-    airodump_capture = airodump_proc.stdout.read().decode('utf-8')
-    print(airodump_capture)
-    t.sleep(12)
-    airodump_proc.send_signal(signal.SIGINT)
+    command = ['airodump-ng','-K','1','-R',"'(My.)'",'-w','targets','--output-format','csv',interface,]
+    process = sp.Popen(command, stdout=sp.PIPE, text=True)
+    # print(Fore.BLUE,'Scanning for networks')
+    t.sleep(1)
+    print(Fore.RED,'Scanning for networks...')
+    t.sleep(1)
+    print(Fore.LIGHTMAGENTA_EX,'Scanning for networks...')
+    t.sleep(1)
+    print(Fore.YELLOW,'Scanning for networks...')
+    t.sleep(1)
+    print(Fore.LIGHTGREEN_EX,'Scanning for networks...')
+    t.sleep(1)
+    print(Fore.GREEN,'Scanning for networks...')
+    t.sleep(1)
+    print(Fore.CYAN,'Scanning for networks...')
+    t.sleep(1)
+    print(Fore.BLUE,'Scanning for networks...')
+    t.sleep(1)
+    print(Fore.CYAN,'Scanning for networks...')
+    t.sleep(1)
+    print(Fore.GREEN,'Scanning for networks...')
+    t.sleep(1)
+    print(Fore.LIGHTGREEN_EX,'Scanning for networks...')
+    t.sleep(1)
+    print(Fore.YELLOW,'Scanning for networks...')
+    t.sleep(1)
+    print(Fore.LIGHTMAGENTA_EX,'Scanning for networks...')
+    t.sleep(1)
+    print(Fore.RED,'Scanning for networks...')
+    # Scan for about 12 seconds for best results
+    process.send_signal(signal.SIGINT)
+    print(Fore.BLUE,'Scanning complete!',Style.RESET_ALL)
+    readFile()
+
+def findFile():
+    process = sp.run('ls | grep target', capture_output=True, text=True, shell=True)
+    ls = process.stdout.split('\n')
+    count = 0
+    for x in ls:
+        if x == '':
+            ls.remove(x)
+            count -= 1
+        count += 1
+    if count > 1:
+        print(Fore.CYAN,'There is',count,'target file(s):')
+        print(Fore.BLUE,'+------------------------+',Fore.WHITE)
+        for x in ls:
+            print(Fore.BLUE, '|', Fore.WHITE, ls.index(x), Fore.BLUE, '|', Fore.WHITE, x, Fore.BLUE,'|', Style.RESET_ALL)
+        print(Fore.BLUE,'+------------------------+',Fore.CYAN)
+        select = int(input(' Select a file:'))
+        print(ls[select])
+        return ls[select]
+    else:
+        return ls[0]
+    
+
+def readFile():
+    file = findFile()
+    with open(file, newline='') as csvfile:
+        spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+        for row in spamreader:
+            print(', '.join(row))
+
+
+def start():
+    getInterface(None) # prints interface information
 
 welcome()       # prints title
-# getInterface(None)  # prints interface information
+start()         # Start the process/function/procedure tree
 
-command = [ROOT,'airodump-ng','-K','1','-I','10','-R',"'(My.)'",'-w','targets','--output-format','csv',interface,]
-# process = sp.run(command, capture_output=True, text=True)
-# output = process.stdout
-# t.sleep(1)
-# proc = sp.run('ps aux | grep airodump', capture_output=True, text=True, shell=True)
-# procs = proc.stdout
-# print(procs)
-
-process = sp.Popen(command, stdout=sp.PIPE, text=True)
-# output = process.stdout.read()
-t.sleep(2)
-process.send_signal(signal.SIGINT)
+# -------SANDBOX--------
+# readFile()
