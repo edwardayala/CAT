@@ -78,16 +78,16 @@ def checkProcesses():
 
 def monitorToggle(interface, mode):     # Runs airmon-ng to start/stop Monitor mode
     if mode == 0:
-        sp.run(['airmon-ng','start',interface], capture_output=True)   # Toggle Monitor Mode
+        sp.run(['airmon-ng','start',getInterface(0)], capture_output=True)   # Toggle Monitor Mode
         print(Fore.GREEN,'Monitor Mode Enabled!',Style.RESET_ALL)
         checkInterface()
     else:
-        sp.run(['airmon-ng','stop',interface], capture_output=True)    # Toggle Managed Mode
+        sp.run(['airmon-ng','stop',getInterface(0)], capture_output=True)    # Toggle Managed Mode
         sp.run(['NetworkManager'])     # Restart NetworkMananger to connect to Internet
         print(Fore.GREEN,'Monitor Mode Disabled & Internet Capabilities Re-Enabled',Style.RESET_ALL)
 
 def findTarget():
-    command = ['airodump-ng','-K','1','-R',"'(My.)'",'-w','targets','--output-format','csv',interface,]
+    command = ['airodump-ng','-K','1','-R',"'(My.)'",'-w','targets','--output-format','csv',getInterface(0),]
     process = sp.Popen(command, stdout=sp.PIPE, text=True)
     # print(Fore.BLUE,'Scanning for networks')
     t.sleep(1)
@@ -146,13 +146,16 @@ def findFile():
 def readFile():
     file = findFile()
     with open(file, newline='') as csvfile:
-        spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
-        for row in spamreader:
+        reader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+        for row in reader:
             print(', '.join(row))
 
 
 def start():
+    
     getInterface(None) # prints interface information
+
+
 
 welcome()       # prints title
 start()         # Start the process/function/procedure tree
