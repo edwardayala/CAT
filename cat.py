@@ -13,7 +13,7 @@ ROOT = 'sudo'
 
 # Functions
 def welcome():
-    print(Fore.LIGHTCYAN_EX)
+    # print(Fore.RED)
     # print('          ▀▀▀██████▄▄▄          ')
     # print('                 ▀▀▀████▄       ')
     # print('          ▄███████▀   ▀███▄     ')
@@ -28,22 +28,8 @@ def welcome():
     # print(' █████▀▀████▄▄        ▄█████    ')
     # print(' ████▀   ▀▀█████▄▄▄▄█████████▄                                                 A WiFi Auditing Tool By Edward Ayala')
     # print('  ▀▀         ▀▀██████▀▀   ▀▀██  ')            
-    #    ,----.
-    #   ( WOW! )                         .-.
-    #    `----' _                         \ \
-    #          (_)                         \ \
-    #              O                       | |
-    #                o                     | |
-    #                  . /\---/\   _,---._ | |
-    #                   /^   ^  \,'       `. ;
-    #                  ( O   O   )           ;
-    #                   `.=o=__,'            \
-    #                     /         _,--.__   \
-    #                    /  _ )   ,'   `-. `-. \
-    #                   / ,' /  ,'        \ \ \ \
-    #                  / /  / ,'          (,_)(,_)
-    #                 (,;  (,,)
 
+    print(Fore.BLUE)
     print(' ,--------------------------.')
     print('( Change Your WiFi Password! )   .-.')
     print(' `--------------------------\'     \ \\')
@@ -54,19 +40,11 @@ def welcome():
     print("                /^   ^  \,'       \'. ;   ██║            ███████║          ██║   ")
     print('               ( O   O   )           ;   ██║            ██╔══██║          ██║   ')
     print("                `.=o=__,'            \\   ╚██████╗██╗    ██║  ██║██╗       ██║██╗")
-    print('                  /         _,--.__   \\    ╚═════╝╚═╝    ╚═╝  ╚═╝╚═╝       ╚═╝╚═╝')
-    print("                 /  _ )   ,'   `-. `-. \\     Charter(networks) Auditing Tool by Edward Ayala")
-    print("                / ,' /  ,\'        \ \ \ \ ")
+    print('                  /         _,--.__   \\   ╚═════╝╚═╝    ╚═╝  ╚═╝╚═╝       ╚═╝╚═╝')
+    print("                 /  _ )   ,'   `-. `-. \\     Charter(networks) Auditing Tool")
+    print("                / ,' /  ,\'        \ \ \ \             by Edward Ayala")
     print("               / /  / ,'          (,_)(,_)")
     print('              (,;  (,,)')
-
-    # print(' ██████╗        █████╗        ████████╗')
-    # print('██╔════╝       ██╔══██╗       ╚══██╔══╝')
-    # print('██║            ███████║          ██║   ')
-    # print('██║            ██╔══██║          ██║   ')
-    # print('╚██████╗██╗    ██║  ██║██╗       ██║██╗')
-    # print(' ╚═════╝╚═╝    ╚═╝  ╚═╝╚═╝       ╚═╝╚═╝')
-    
                                                                                                  
     print(Style.RESET_ALL)
     
@@ -183,11 +161,19 @@ def findFile():
     
 
 def readFile():
+    names = []
+    bssid = ''
+    power = ''
     file = findFile()
-    with open(file, newline='') as csvfile:
-        reader = csv.reader(csvfile, delimiter=' ', quotechar='|')
-        for row in reader:
-            print(', '.join(row))
+    with open(file, newline='') as csv:
+        parse = csv.read().split(',')
+        for x in parse:
+            if x == 'BSSID':
+                bssid = x
+            if x == 'Power':
+                power = x
+            if x.__contains__('My'):
+                names.append(x)                
 
 
 def start():
@@ -200,4 +186,4 @@ welcome()       # prints title
 # start()         # Start the process/function/procedure tree
 
 # -------SANDBOX--------
-# readFile()
+readFile()
