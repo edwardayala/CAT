@@ -2,13 +2,13 @@
 BSSID, First time seen, Last time seen, channel, Speed, Privacy, Cipher, Authentication, Power, # beacons, # IV, LAN IP, ID-length, ESSID, Key
 
 Station MAC, First time seen, Last time seen, Power, # packets, BSSID, Probed ESSIDs
-98:2C:BC:1A:C0:BB, 2020-03-03 15:45:09, 2020-03-03 15:45:09, -90,        1, (not associated) ,
-8E:7F:6B:98:14:4F, 2020-03-03 15:45:10, 2020-03-03 15:45:10, -90,        1, (not associated) ,
-66:1D:55:36:AA:00, 2020-03-03 15:45:17, 2020-03-03 15:45:17, -89,        1, (not associated) ,
-B8:27:EB:C0:97:89, 2020-03-03 15:45:17, 2020-03-03 15:45:17, -87,        1, (not associated) ,
-8C:85:90:0C:62:55, 2020-03-03 15:45:12, 2020-03-03 15:45:12, -82,        6, (not associated) ,TXWES-Secure
-12:36:51:23:15:A4, 2020-03-03 15:45:13, 2020-03-03 15:45:13, -79,        3, (not associated) ,
-30:57:14:23:7A:F8, 2020-03-03 15:45:14, 2020-03-03 15:45:19, -66,       10, B0:B8:67:5E:AC:E1,TXWES-Secure
-C8:B5:B7:71:DE:02, 2020-03-03 15:45:10, 2020-03-03 15:45:10, -61,        7, (not associated) ,TXWES-Secure
-FC:77:74:41:78:D2, 2020-03-03 15:45:21, 2020-03-03 15:45:21, -80,        1, (not associated) ,
+EC:0E:C4:DC:9F:35, 2020-03-09 16:00:24, 2020-03-09 16:00:24, -86,        1, (not associated) ,CrowleyPawnWiFifc-2G
+F0:1D:BC:00:2B:F6, 2020-03-09 16:00:30, 2020-03-09 16:00:30, -76,        1, (not associated) ,
+BC:A5:8B:18:12:03, 2020-03-09 16:00:27, 2020-03-09 16:00:27, -70,        1, (not associated) ,
+5C:52:1E:9B:B9:5F, 2020-03-09 16:00:26, 2020-03-09 16:00:31, -69,        4, (not associated) ,
+44:18:FD:1C:0D:3E, 2020-03-09 16:00:26, 2020-03-09 16:00:31, -61,        3, 2C:30:33:FD:A3:A2,
+C8:3A:6B:3A:18:E5, 2020-03-09 16:00:27, 2020-03-09 16:00:29, -59,       10, (not associated) ,MySpectrumWiFia3-2G
+80:7D:3A:53:BE:70, 2020-03-09 16:00:21, 2020-03-09 16:00:33, -44,       14, (not associated) ,MySpectrumWiFia3-2G
+80:7D:3A:53:C5:07, 2020-03-09 16:00:22, 2020-03-09 16:00:34, -38,       11, (not associated) ,MySpectrumWiFia3-2G
+90:61:AE:ED:AF:2B, 2020-03-09 16:00:26, 2020-03-09 16:00:26,  -1,        3, 1C:1B:68:D5:AF:B0,
 

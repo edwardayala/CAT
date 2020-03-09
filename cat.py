@@ -104,7 +104,7 @@ def monitorToggle(interface, mode):     # Runs airmon-ng to start/stop Monitor m
         print(Fore.GREEN,'Monitor Mode Disabled & Internet Capabilities Re-Enabled',Style.RESET_ALL)
 
 def findTarget():
-    command = ['airodump-ng','-K','1','-R',"'(My.)'",'-w','targets','--output-format','csv',getInterface(0),]
+    command = ['airodump-ng','-K','1','-a','-R',"'(My.)'",'-w','targets','--output-format','csv',getInterface(0),]
     process = sp.Popen(command, stdout=sp.PIPE, text=True)
     # print(Fore.BLUE,'Scanning for networks')
     t.sleep(1)
@@ -154,30 +154,50 @@ def findFile():
             print(Fore.BLUE, '|', Fore.WHITE, ls.index(x), Fore.BLUE, '|', Fore.WHITE, x, Fore.BLUE,'|', Style.RESET_ALL)
         print(Fore.BLUE,'+------------------------+',Fore.CYAN)
         select = int(input(' Select a file:'))
-        print(ls[select])
+        print(Fore.YELLOW, ls[select], Style.RESET_ALL)
         return ls[select]
     else:
         return ls[0]
     
 
 def readFile():
-    names = []
-    bssid = ''
-    power = ''
     file = findFile()
-    with open(file, newline='') as csv:
-        parse = csv.read().split(',')
-        for x in parse:
-            if x == 'BSSID':
-                bssid = x
-            if x == 'Power':
-                power = x
-            if x.__contains__('My'):
-                names.append(x)                
+    # rows = []
+    # with open(file, newline='') as csv:
+    #     parse = csv.read().split(',')
+    #     for x in parse:
+    #         if x == :
+    #             print('FOUND NEW LINE')
+    #     # print(parse)
+    # reading csv file 
+    with open(file, 'r') as csvfile: 
+        # creating a csv reader object 
+        csvreader = csv.reader(csvfile) 
+
+        # print header
+        print(Fore.BLUE,'+--------BSSID-----------Power Level-----------Channel-----------Network Name-----------+',Fore.WHITE)
+        for row in csvreader:
+            # skip empty rows
+            if not row:
+                continue
+            # skip first row
+            if row.__contains__('BSSID'):
+                continue
+            # skip second row
+            if row.__contains__('Station MAC'):
+                continue
+            # skip networks without ESSID/Name
+            if row[6] == '':
+                continue
+            # skip networks that are not Charter networks
+            if 'My' not in row[6]:
+                continue
+            
+            print(Fore.BLUE,'| ',Fore.WHITE,row[0],'      ',row[3],'        ',row[4],'           ',row[6],Fore.BLUE,'  |',Fore.WHITE)
+            print(Fore.BLUE,'+---------------------------------------------------------------------------------------+',Style.RESET_ALL)
 
 
 def start():
-    
     getInterface(None) # prints interface information
 
 
