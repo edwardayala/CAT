@@ -1,6 +1,0 @@
-
-BSSID, First time seen, Last time seen, channel, Speed, Privacy, Cipher, Authentication, Power, # beacons, # IV, LAN IP, ID-length, ESSID, Key
-
-Station MAC, First time seen, Last time seen, Power, # packets, BSSID, Probed ESSIDs
-F4:F2:6D:16:F3:9D, 2020-02-14 22:41:42, 2020-02-14 22:41:47,  -1,        8, 1C:6A:7A:B0:33:C0,
-
