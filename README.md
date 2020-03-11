@@ -21,9 +21,7 @@
 
 ```
 
-</span>
-
 ### Description:
 Implementing the Aircrack-ng Suite, Wash, and Python3, this tool automates the WiFi auditing process.
-* The tool is catered to target Ch*rter Sp*ctrum networks' default password structure.
+* The tool is catered to target Ch_rter Sp_ctrum networks' default password structure.
 
