@@ -52,25 +52,14 @@ Other:
 New Kali 2020.1 - not root as default
 		- users must run script as root
 
-Handshake Verification:
-***Requirements***:
-*Kali
-*.CAP file
+Handshake Notes:
+** How to successfully get a GOOD handshake from network **
+Use Airodump-ng to listen to the network: sudo airodump-ng -c [CHANNEL] --bssid [BSSID] -w [FILENAME] --output-format cap [INTERFACE]
+Use Python to gather clients: listed under 
 
-Okay, so when capturing a handshake, you can sometimes capture a incomplete handshake. It will come up as if you captured one, but you will be unable to brute force it. So instead of wasting hours of your time brute forcing the handshake, I will show you two methods on how to check if its valid before you go ahead and brute force.
 
-Method 1: Cowpatty
-
-1.) Open up CMD and type in the following command:
-CODE:
-cowpatty -c -r FONHandShake.cap
-REPLACE FONHandShake.cap WITH THE NAME OF YOUR .CAP FILE WHICH SHOULD BE IN THE HOME DIRECTORY.
-
-Once you run that command you should get the results of the quality of the handshake.
-
----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-Method 2: Pyrit
+VERIFY HANDSHAKE:
+Pyrit
 
 1.) In CMD type the following command
 CODE:
@@ -80,9 +69,24 @@ REPLACE FONHandShake.cap WITH THE NAME OF YOUR .CAP FILE WHICH SHOULD BE IN THE 
 You will get the results which will state if the handshake is good or not(good/workable/bad).
 If you have a good quality handshake it should have the word "Good" in there.
 
+FIND CLIENTS:
+CH 10 ][ Elapsed: 36 s ][ 2020-03-12 18:36 ][ WPA handshake: A0:63:91:E3:41:C9                         
+                                                                                                        
+ BSSID              PWR RXQ  Beacons    #Data, #/s  CH  MB   ENC  CIPHER AUTH ESSID
+                                                                                                        
+ A0:63:91:E3:41:C9  -55  97      324      410    0  10  405  WPA2 CCMP   PSK  MyCharterWiFic9-2G        <--- NETWORK
+                                                                                                        
+ BSSID              STATION            PWR   Rate    Lost    Frames  Probe                              
+                                                                                                        
+ A0:63:91:E3:41:C9  02:0F:B5:05:41:27  -84    0 - 1e     0       13       <--- CLIENT                               
+ A0:63:91:E3:41:C9  02:0F:B5:1C:8A:04  -85    0 - 1e     0       13       <--- CLIENT                               
+ A0:63:91:E3:41:C9  02:0F:B5:6B:0D:19  -83    0 - 1e     0       11       <--- CLIENT                               
+ A0:63:91:E3:41:C9  02:0F:B5:FB:E2:BA  -84    1e- 1e     0      676       <--- CLIENT                               
+ A0:63:91:E3:41:C9  02:0F:B5:5F:6B:66  -83    0 - 1e     0       11       <--- CLIENT
+
 TODO:
-* Find clients
-* Verify handshakes
+* Find clients -- DONE
+* Verify handshakes -- DONE
 
 
 

