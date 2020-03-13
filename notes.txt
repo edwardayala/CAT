@@ -85,8 +85,9 @@ CH 10 ][ Elapsed: 36 s ][ 2020-03-12 18:36 ][ WPA handshake: A0:63:91:E3:41:C9
  A0:63:91:E3:41:C9  02:0F:B5:5F:6B:66  -83    0 - 1e     0       11       <--- CLIENT
 
 TODO:
-* Find clients -- DONE
-* Verify handshakes -- DONE
+* Find clients -- In progress
+* Verify handshakes -- Planned
+* Add directory check and initialization -- Planned
 
 
 

