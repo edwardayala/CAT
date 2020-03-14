@@ -35,7 +35,7 @@
 <br> 
 </p>
 
-## 🧐 Table of Contents
+## :book: Table of Contents
 
 - [About](#about)
 - [Getting Started](#getting_started)
@@ -44,7 +44,7 @@
 - [TODO](../TODO.md)
 - [Authors](#authors)
 
-## 🧐 About <a name = "about"></a>
+## :computer:	 About <a name = "about"></a>
 The WiFi network at your house connects you to the internet, you just type in the password that's on the back of the router and you're connected to the network. That's simple and easy! Although there is a significant danger to this easy process. This password on the back of your router is purposely made simple and easy to remember to cater to the customers(you) but that also makes it simple and easy for malicious hackers to break into your network and wreak havoc. This project demonstrates this vulnerability specifically on Charter Spectrum networks, which universally implements a simple password structure that makes it easy to communicate and remember the password. Using an automated tool, hackers can break into a Charter Spectrum network in minutes and gain access to your sensative private information.
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
