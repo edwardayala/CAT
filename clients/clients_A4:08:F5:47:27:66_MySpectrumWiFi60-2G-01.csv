@@ -1,0 +1,9 @@
+
+BSSID, First time seen, Last time seen, channel, Speed, Privacy, Cipher, Authentication, Power, # beacons, # IV, LAN IP, ID-length, ESSID, Key
+A4:08:F5:47:27:66, 2020-03-15 22:58:31, 2020-03-15 22:59:05, 11, 195, WPA2, CCMP, PSK, -81,      246,       57,   0.  0.  0.  0,  19, MySpectrumWiFi60-2G, 
+
+Station MAC, First time seen, Last time seen, Power, # packets, BSSID, Probed ESSIDs
+60:45:BD:A6:F8:A2, 2020-03-15 22:58:31, 2020-03-15 22:58:47, -88,        3, A4:08:F5:47:27:66,
+0C:EE:99:7F:E7:0B, 2020-03-15 22:58:59, 2020-03-15 22:59:00,  -1,        4, A4:08:F5:47:27:66,
+AC:89:95:5F:BA:25, 2020-03-15 22:59:00, 2020-03-15 22:59:00,  -1,        2, A4:08:F5:47:27:66,
+

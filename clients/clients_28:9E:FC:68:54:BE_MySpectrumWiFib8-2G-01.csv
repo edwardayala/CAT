@@ -1,0 +1,6 @@
+
+BSSID, First time seen, Last time seen, channel, Speed, Privacy, Cipher, Authentication, Power, # beacons, # IV, LAN IP, ID-length, ESSID, Key
+28:9E:FC:68:54:BE, 2020-03-15 22:54:12, 2020-03-15 22:54:32,  1, 195, WPA2, CCMP, PSK, -90,        2,        0,   0.  0.  0.  0,  19, MySpectrumWiFib8-2G, 
+
+Station MAC, First time seen, Last time seen, Power, # packets, BSSID, Probed ESSIDs
+
