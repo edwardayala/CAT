@@ -1,5 +1,8 @@
 !MUST RUN AS ROOT!	
 
+adj | aircrack-ng -w - ../CAT/captures/capture_7C\:DB\:98\:B4\:5D\:59_MySpectrumWiFi5B-2G-01.cap -e MySpectrumWiFi5B-2G
+
+
 
 Airmon-ng --write DOES NOT PROVIDE ALL DETAILS THAT ARE SEEN IN THE TERMINAL	
 THEREFORE I AM USING WASH AS A WAY TO GATHER NETWORK INFORMATION	
