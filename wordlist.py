@@ -6,6 +6,7 @@ if len(sys.argv) > 1:
     for i in range(len(sys.argv)):
         if sys.argv[i] == '-full':
             use_full = True
+
 # 153 adjectives
 adj = ['ancient','antique','aquatic','baby','basic','big','bitter','black','blue','bottle','bottled','brave','breezy','bright','brown','calm','charming','cheerful','chummy','classy','clear','clever','cloudy','cold','cool','crispy','curly','daily','deep','delightful','dizzy','down','dynamic','elated','elegant','excited','exotic','fancy','fast','fearless','festive','fluffy','fragile','fresh','friendly','funny','fuzzy','gentle','gifted','gigantic','graceful','grand','grateful','great','green','happy','heavy','helpful','hot','hungry','husky','icy','imaginary','invisible','jagged','jolly','joyful','joyous','kind','large','light','little','lively','lovely','lucky','lumpy','magical','manic','melodic','mighty','misty','modern','narrow','new','nifty','noisy','normal','odd','old','orange','ordinary','painless','pastel','peaceful','perfect','phobic','pink','polite','precious','pretty','purple','quaint','quick','quiet','rapid','red','rocky','rough','round','royal','rugged','rustic','safe','sandy','shiny','silent','silky','silly','slender','slow','small','smiling','smooth','snug','soft','sour','strange','strong','sunny','sweet','swift','thirsty','thoughtful','tiny','uneven','unusual','vanilla','vast','violet','warm','watery','weak','white','wide','wild','wilde','windy','wise','witty','wonderful','yellow','young','zany']
 # 968 adjectives
@@ -29,7 +30,6 @@ else:
 
 for i in range(adj_count):
     for j in range(noun_count):
-        # if use[3] == True:
         for k in range(1000):
             output = adj_full[i] if use_full else adj[i] 
             output += noun_full[j] if use_full else noun[j] 

