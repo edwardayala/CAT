@@ -1,6 +1,0 @@
-
-BSSID, First time seen, Last time seen, channel, Speed, Privacy, Cipher, Authentication, Power, # beacons, # IV, LAN IP, ID-length, ESSID, Key
-50:6A:03:A8:AC:C4, 2020-03-15 22:47:49, 2020-03-15 22:48:24,  6, 195, WPA2, CCMP, PSK, -85,       67,       20,   0.  0.  0.  0,  18, MyCharterWiFic4-2G, 
-
-Station MAC, First time seen, Last time seen, Power, # packets, BSSID, Probed ESSIDs
-
