@@ -1,0 +1,10 @@
+
+BSSID, First time seen, Last time seen, channel, Speed, Privacy, Cipher, Authentication, Power, # beacons, # IV, LAN IP, ID-length, ESSID, Key
+A0:63:91:E3:41:C9, 2020-03-26 18:27:42, 2020-03-26 18:28:16, 10, 405, WPA2 WPA, CCMP TKIP, PSK, -66,      281,      212,   0.  0.  0.  0,  18, MyCharterWiFic9-2G, 
+
+Station MAC, First time seen, Last time seen, Power, # packets, BSSID, Probed ESSIDs
+02:0F:B5:FB:E2:BA, 2020-03-26 18:27:56, 2020-03-26 18:28:14, -82,        4, A0:63:91:E3:41:C9,
+02:0F:B5:1C:8A:04, 2020-03-26 18:27:44, 2020-03-26 18:28:15, -85,        3, A0:63:91:E3:41:C9,
+02:0F:B5:05:41:27, 2020-03-26 18:28:02, 2020-03-26 18:28:02, -86,        1, A0:63:91:E3:41:C9,
+02:0F:B5:5F:6B:66, 2020-03-26 18:27:50, 2020-03-26 18:28:15, -83,        4, A0:63:91:E3:41:C9,
+

@@ -377,6 +377,7 @@ def verifyHandshake(BSSID,target):
         crackPassword(handshakeFile,target)
     else:
         print(Fore.LIGHTYELLOW_EX,'Password not captured, likely not enough clients connected - try again with another network')
+        monitorToggle(getInterface(0),1)
 
 def crackPassword(file,target):
     Name = target[3]
