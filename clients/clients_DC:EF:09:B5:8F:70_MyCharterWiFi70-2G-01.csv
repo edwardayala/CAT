@@ -1,0 +1,10 @@
+
+BSSID, First time seen, Last time seen, channel, Speed, Privacy, Cipher, Authentication, Power, # beacons, # IV, LAN IP, ID-length, ESSID, Key
+DC:EF:09:B5:8F:70, 2020-03-31 22:32:49, 2020-03-31 22:33:23, 11, 195, WPA2, CCMP, PSK, -44,      311,      856,   0.  0.  0.  0,  18, MyCharterWiFi70-2G, 
+
+Station MAC, First time seen, Last time seen, Power, # packets, BSSID, Probed ESSIDs
+D0:F8:8C:03:8E:23, 2020-03-31 22:32:51, 2020-03-31 22:33:23, -50,      261, DC:EF:09:B5:8F:70,MyCharterWiFi70-2G
+74:E5:F9:A5:0A:2D, 2020-03-31 22:32:57, 2020-03-31 22:33:19, -63,       61, DC:EF:09:B5:8F:70,
+CC:95:D7:4F:FF:51, 2020-03-31 22:32:50, 2020-03-31 22:33:23, -56,      198, DC:EF:09:B5:8F:70,MyCharterWiFi70-2G
+F8:FF:C2:1B:56:D1, 2020-03-31 22:32:50, 2020-03-31 22:32:55, -37,       30, DC:EF:09:B5:8F:70,
+
