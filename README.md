@@ -137,6 +137,6 @@ sudo python3 cat.py
 - [@edwardayala](https://github.com/edwardayala)
 
 ## :tv: Demo
-[![Watch the video](https://img.youtube.com/vi/T-SQJzsDEgBas/maxresdefault.jpg)](https://youtu.be/T-SQJzsDEgBas)
+[![Watch the video](https://img.youtube.com/vi/SQJzsDEgBas/maxresdefault.jpg)](https://youtu.be/SQJzsDEgBas)
 
 </span>
