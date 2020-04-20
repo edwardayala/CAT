@@ -132,6 +132,9 @@ sudo python3 cat.py
 - [Aircrack-ng](https://www.aircrack-ng.org/) - Network auditing tool
 - [Wash](https://github.com/t6x/reaver-wps-fork-t6x) - Network auditing tool
 
+## Understanding The Code
+<img src="https://raw.githubusercontent.com/edwardayala/CAT/master/CAT_UML.png">
+
 ## ✍️ Authors <a name = "authors"></a>
 
 - [@edwardayala](https://github.com/edwardayala)
