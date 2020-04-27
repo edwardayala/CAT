@@ -373,6 +373,11 @@ def verifyHandshake(BSSID,target):
         print(Fore.LIGHTGREEN_EX, '| PASSWORD CAPTURED! |')
         print(Fore.LIGHTGREEN_EX, '+--------------------+\n')
         monitorToggle(getInterface(0),1)
+        start_input = input('Do you want to decrypt the password now? (Y|n):').lower()
+        if start_input == 'y' or start_input == 'yes':
+            crackPassword(handshakeFile,target)
+        else:
+            print('NOT CRACKING - CAPTURE FILE SAVED AS ', handshakeFile)
         t.sleep(2)
         crackPassword(handshakeFile,target)
     else:
